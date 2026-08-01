@@ -172,7 +172,10 @@ async function openCheckout(plan) {
     const priceId = STRIPE_PRICES[plan].monthly;
     const resp = await fetch(API_URL + '/api/create-checkout', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Bypass-Tunnel-Reminder': 'true'
+      },
       body: JSON.stringify({
         plan: plan,
         priceId: priceId,
