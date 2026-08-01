@@ -159,6 +159,8 @@ const STRIPE_PRICES = {
 
 const stripe = Stripe('pk_live_51TziX8JEmAzZX26pgH1hlFkdwuHdPxjXJD0B5rsHAYUnmdOSRgi5jwSgtqrPQEioJC0ZLPHUipVsRsl9WQJKX9b800LEXTT9iM');
 
+const API_URL = 'https://yellow-pillows-smash.loca.lt';
+
 async function openCheckout(plan) {
   if (plan === 'enterprise') {
     document.getElementById('pricing').scrollIntoView({behavior:'smooth'});
@@ -168,19 +170,25 @@ async function openCheckout(plan) {
   document.getElementById('lsOverlay').classList.add('active');
   try {
     const priceId = STRIPE_PRICES[plan].monthly;
-    const { error } = await stripe.redirectToCheckout({
-      lineItems: [{price: priceId, quantity: 1}],
-      mode: 'subscription',
-      successUrl: 'https://mingo-inc.github.io?success=true&plan=' + plan,
-      cancelUrl: 'https://mingo-inc.github.io?canceled=true',
+    const resp = await fetch(API_URL + '/api/create-checkout', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        plan: plan,
+        priceId: priceId,
+        successUrl: 'https://mingo-inc.github.io?success=true&plan=' + plan,
+        cancelUrl: 'https://mingo-inc.github.io?canceled=true'
+      })
     });
-    if (error) {
-      document.getElementById('lsOverlay').classList.remove('active');
-      alert('Checkout error: ' + error.message);
+    const data = await resp.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      throw new Error(data.error || 'No checkout URL returned');
     }
   } catch(e) {
     document.getElementById('lsOverlay').classList.remove('active');
-    alert('Something went wrong. Please try again.');
+    alert('Checkout error: ' + (e.message || 'Please try again.'));
   }
 }
 function closeCheckout(){document.getElementById('lsOverlay').classList.remove('active')}
