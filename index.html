@@ -12,6 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <script src="https://js.stripe.com/v3/"></script>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{--bg:#06060E;--surface:#0D0D1A;--surface-elevated:#151528;--border:#1E1E36;--accent:#FF5C3A;--text-primary:#F0F0F7;--text-secondary:#9898B0;--text-muted:#606078;--gradient-1:linear-gradient(135deg,#FF5C3A 0%,#FF3860 100%)}
@@ -144,12 +145,40 @@
 
 <footer><div class="container"><a href="#" class="logo" style="font-size:1.1rem">Mingo<span>.</span>Services</a><p>&copy; 2026 Mingo Services. AI that works. Teams that ship.</p></div></footer>
 
-<div class="ls-overlay" id="lsOverlay"><div class="ls-modal"><h3>Ready to get started?</h3><p id="lsPlanName">You're selecting the Pro plan.</p><button class="btn-primary" onclick="window.open('https://lemonsqueezy.com','_blank');closeCheckout()" style="margin-bottom:12px">Proceed to Checkout</button><br><a href="#" onclick="closeCheckout();return false" style="color:var(--text-muted);font-size:0.85rem">Maybe later</a></div></div>
+<div class="ls-overlay" id="lsOverlay"><div class="ls-modal"><div class="spinner" style="width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px"></div><h3>Redirecting to checkout...</h3><p style="color:var(--text-secondary)">You'll be redirected to Stripe's secure payment page.</p></div></div>
+
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
 
 <script>
-function openCheckout(p){document.getElementById('lsPlanName').textContent="You're selecting the "+{starter:'Starter',pro:'Pro',enterprise:'Enterprise'}[p]+" plan.";document.getElementById('lsOverlay').classList.add('active')}
+// TODO: Replace these with your actual Stripe Price IDs from https://dashboard.stripe.com/products
+const STRIPE_PRICES = {
+  starter: { monthly: 'price_STARTER_MONTHLY_ID', annual: 'price_STARTER_ANNUAL_ID' },
+  pro:     { monthly: 'price_PRO_MONTHLY_ID',     annual: 'price_PRO_ANNUAL_ID' },
+  enterprise: { monthly: 'price_ENTERPRISE_ID',   annual: 'price_ENTERPRISE_ID' }
+};
+
+const stripe = Stripe('pk_live_REPLACE_WITH_YOUR_PUBLISHABLE_KEY');
+
+async function openCheckout(plan) {
+  document.getElementById('lsOverlay').classList.add('active');
+  try {
+    const priceId = STRIPE_PRICES[plan].monthly;
+    const { error } = await stripe.redirectToCheckout({
+      lineItems: [{price: priceId, quantity: 1}],
+      mode: 'subscription',
+      successUrl: 'https://mingo-inc.github.io?success=true&plan=' + plan,
+      cancelUrl: 'https://mingo-inc.github.io?canceled=true',
+    });
+    if (error) {
+      document.getElementById('lsOverlay').classList.remove('active');
+      alert('Checkout error: ' + error.message);
+    }
+  } catch(e) {
+    document.getElementById('lsOverlay').classList.remove('active');
+    alert('Something went wrong. Please try again.');
+  }
+}
 function closeCheckout(){document.getElementById('lsOverlay').classList.remove('active')}
-document.getElementById('lsOverlay').addEventListener('click',function(e){if(e.target===this)closeCheckout()})
 </script>
 </body>
 </html>
