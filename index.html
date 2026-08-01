@@ -1,170 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Mingo Services — AI that works. Teams that ship.">
-  <meta property="og:title" content="Mingo Services — AI that works. Teams that ship.">
-  <meta property="og:description" content="AI-powered automation, agent teams, and consulting for modern businesses.">
-  <meta property="og:type" content="website">
-  <title>Mingo Services — AI that works. Teams that ship.</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
-  <script src="https://js.stripe.com/v3/"></script>
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--bg:#06060E;--surface:#0D0D1A;--surface-elevated:#151528;--border:#1E1E36;--accent:#FF5C3A;--text-primary:#F0F0F7;--text-secondary:#9898B0;--text-muted:#606078;--gradient-1:linear-gradient(135deg,#FF5C3A 0%,#FF3860 100%)}
-    html{scroll-behavior:smooth}
-    body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text-primary);line-height:1.6;-webkit-font-smoothing:antialiased}
-    h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.02em}
-    .container{max-width:1200px;margin:0 auto;padding:0 24px}
-    nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(6,6,14,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-    nav .container{display:flex;align-items:center;justify-content:space-between;height:64px}
-    .logo{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;color:var(--text-primary);text-decoration:none}
-    .logo span{color:var(--accent)}
-    .nav-links{display:flex;gap:32px;list-style:none}
-    .nav-links a{color:var(--text-secondary);text-decoration:none;font-size:0.9rem;transition:color 0.2s}
-    .nav-links a:hover{color:var(--text-primary)}
-    .nav-cta{background:var(--gradient-1);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;font-family:'Inter',sans-serif}
-    .nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(255,92,58,0.4)}
-    .hero{padding:160px 0 100px;text-align:center;position:relative;overflow:hidden}
-    .hero::before{content:'';position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(255,92,58,0.08) 0%,transparent 70%);pointer-events:none}
-    .hero h1{font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.1;margin-bottom:24px}
-    .hero h1 span{background:var(--gradient-1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .hero p{font-size:1.2rem;color:var(--text-secondary);max-width:600px;margin:0 auto 40px}
-    .hero-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-    .btn-primary{background:var(--gradient-1);color:#fff;border:none;padding:14px 36px;border-radius:10px;font-size:1rem;font-weight:600;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;text-decoration:none;display:inline-block}
-    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(255,92,58,0.5)}
-    .btn-secondary{background:transparent;color:var(--text-primary);border:1px solid var(--border);padding:14px 36px;border-radius:10px;font-size:1rem;font-weight:500;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block}
-    .btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
-    section{padding:100px 0}
-    .section-label{color:var(--accent);font-weight:600;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px}
-    .section-title{font-size:clamp(2rem,4vw,3rem);margin-bottom:16px}
-    .section-subtitle{color:var(--text-secondary);font-size:1.1rem;max-width:600px;margin-bottom:60px}
-    .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
-    .service-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:36px 28px;transition:all 0.3s}
-    .service-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 8px 40px rgba(255,92,58,0.1)}
-    .service-icon{font-size:2rem;color:var(--accent);margin-bottom:16px}
-    .service-card h3{font-size:1.25rem;margin-bottom:8px}
-    .service-card p{color:var(--text-secondary);font-size:0.95rem}
-    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-    .about-text p{color:var(--text-secondary);margin-bottom:24px;font-size:1.05rem}
-    .diff-list{list-style:none;display:grid;gap:16px}
-    .diff-list li{display:flex;gap:12px;align-items:flex-start}
-    .diff-list .dot{color:var(--accent);font-size:1.2rem;margin-top:2px}
-    .about-visual{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px;text-align:center}
-    .stat-number{font-family:'Space Grotesk',sans-serif;font-size:3.5rem;font-weight:700;color:var(--accent)}
-    .stat-label{color:var(--text-secondary);font-size:0.95rem;margin-top:4px}
-    .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:24px}
-    .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
-    .pricing-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:40px 28px;text-align:center;transition:all 0.3s;position:relative}
-    .pricing-card.featured{border-color:var(--accent);box-shadow:0 0 40px rgba(255,92,58,0.15)}
-    .pricing-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gradient-1);color:#fff;padding:4px 16px;border-radius:20px;font-size:0.8rem;font-weight:600}
-    .pricing-card h3{font-size:1.3rem;margin-bottom:4px}
-    .price{font-family:'Space Grotesk',sans-serif;font-size:3rem;font-weight:700;margin:16px 0 4px}
-    .price span{font-size:1rem;font-weight:400;color:var(--text-secondary)}
-    .price-sub{color:var(--text-muted);font-size:0.85rem;margin-bottom:24px}
-    .pricing-features{list-style:none;text-align:left;margin-bottom:28px}
-    .pricing-features li{padding:8px 0;color:var(--text-secondary);font-size:0.9rem;display:flex;gap:8px;align-items:center}
-    .pricing-features li i{color:var(--accent)}
-    .pricing-card .btn-primary{width:100%}
-    .trust-bar{display:flex;gap:48px;justify-content:center;flex-wrap:wrap;padding:40px;background:var(--surface);border:1px solid var(--border);border-radius:16px}
-    .trust-item{text-align:center}
-    .trust-item .num{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:var(--accent)}
-    .trust-item .lbl{color:var(--text-secondary);font-size:0.85rem;margin-top:4px}
-    .cta-section{text-align:center}
-    .cta-section .section-title{margin-bottom:40px}
-    footer{border-top:1px solid var(--border);padding:40px 0}
-    footer .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
-    footer p{color:var(--text-muted);font-size:0.85rem}
-    .ls-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:200;justify-content:center;align-items:center}
-    .ls-overlay.active{display:flex}
-    .ls-modal{background:var(--surface-elevated);border:1px solid var(--border);border-radius:16px;padding:32px;max-width:480px;width:90%;text-align:center}
-    .ls-modal h3{margin-bottom:8px}
-    .ls-modal p{color:var(--text-secondary);margin-bottom:24px}
-    @media(max-width:768px){.about-grid{grid-template-columns:1fr}.nav-links{display:none}.hero{padding:120px 0 60px}section{padding:60px 0}.trust-bar{gap:24px}}
-  </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mingo Services — AI that works. Teams that ship.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#06060E;--surface:#0D0D1A;--border:#1E1E36;--accent:#FF5C3A;--text:#F0F0F7;--text2:#9898B0;--green:#22C55E}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(6,6,14,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+nav .c{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;color:var(--text);text-decoration:none}.logo span{color:var(--accent)}
+.btn{background:linear-gradient(135deg,#FF5C3A,#FF3860);color:#fff;border:none;padding:10px 22px;border-radius:8px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-size:.9rem}
+.btn-o{background:transparent;color:var(--text);border:1px solid var(--border);padding:10px 22px;border-radius:8px;cursor:pointer;text-decoration:none;font-size:.9rem}
+.btn-o:hover{border-color:var(--accent);color:var(--accent)}
+section{padding:80px 0}
+.page{display:none}.page.active{display:block}
+.hero{padding:140px 0 80px;text-align:center}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2rem,5vw,3.5rem);line-height:1.15;margin-bottom:20px}
+.hero h1 span{background:linear-gradient(135deg,#FF5C3A,#FF3860);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:1.1rem;color:var(--text2);max-width:550px;margin:0 auto 32px}
+.label{color:var(--accent);font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+h2{font-family:'Space Grotesk',sans-serif;font-size:2rem;margin-bottom:14px}
+.sub{color:var(--text2);max-width:550px;margin-bottom:50px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px 24px;text-align:center}
+.card.featured{border-color:var(--accent);box-shadow:0 0 30px rgba(255,92,58,.12);position:relative}
+.badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#FF5C3A,#FF3860);color:#fff;padding:3px 14px;border-radius:20px;font-size:.75rem;font-weight:600}
+.card h3{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;margin-bottom:6px}
+.card p{color:var(--text2);font-size:.9rem}
+.price{font-family:'Space Grotesk',sans-serif;font-size:2.8rem;font-weight:700;margin:14px 0 4px}
+.price-sub{color:var(--text2);font-size:.85rem;margin-bottom:20px}
+.feat{list-style:none;text-align:left;margin-bottom:24px}.feat li{padding:6px 0;color:var(--text2);font-size:.88rem}
+.feat li::before{content:'✓ ';color:var(--accent)}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+.step{text-align:center}.step-num{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:var(--accent)}.step p{font-size:.88rem;color:var(--text2);margin-top:6px}
+footer{border-top:1px solid var(--border);padding:30px 0;text-align:center}
+footer p{color:var(--text2);font-size:.8rem}
+
+/* Auth forms */
+.auth-box{max-width:420px;margin:120px auto;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:40px}
+.auth-box h2{font-size:1.3rem;text-align:center;margin-bottom:20px}
+label{display:block;font-size:.85rem;margin-bottom:6px;color:var(--text2)}
+input,textarea{width:100%;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.9rem;margin-bottom:12px;font-family:inherit}
+input:focus,textarea:focus{outline:none;border-color:var(--accent)}
+.err{background:rgba(255,92,58,.1);color:var(--accent);padding:10px;border-radius:8px;margin-bottom:14px;font-size:.85rem}
+.success{background:rgba(34,197,94,.1);color:var(--green);padding:10px;border-radius:8px;margin-bottom:14px;font-size:.85rem}
+.link{text-align:center;margin-top:14px;font-size:.85rem;color:var(--text2)}.link a{color:var(--accent);cursor:pointer;text-decoration:none}
+
+/* Dashboard */
+.dash{padding:100px 0}
+.dash h1{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;margin-bottom:4px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:24px 0}
+.stat-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+.stat-box .val{font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:700;color:var(--accent)}
+.stat-box .lbl{font-size:.8rem;color:var(--text2)}
+.section-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px}
+.section-box h3{font-family:'Space Grotesk',sans-serif;margin-bottom:12px}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th{text-align:left;color:var(--text2);padding:8px;border-bottom:1px solid var(--border);font-size:.75rem;text-transform:uppercase}
+td{padding:8px;border-bottom:1px solid var(--border)}
+.badge-s{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.7rem;font-weight:600}
+.badge-pending{background:rgba(255,193,7,.15);color:#FFC107}
+.badge-progress{background:rgba(59,130,246,.15);color:#3B82F6}
+.badge-done{background:rgba(34,197,94,.15);color:var(--green)}
+.rev{color:var(--green);font-size:2rem;font-weight:700}
+.loading{text-align:center;padding:60px;color:var(--text2)}.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}@keyframes spin{to{transform:rotate(360deg)}}
+.nav-r{display:flex;gap:10px;align-items:center;font-size:.85rem}
+.nav-r span{color:var(--text2)}
+textarea{height:80px;resize:vertical}
+@media(max-width:768px){.hero{padding:100px 0 50px}nav .c{flex-wrap:wrap;gap:10px;justify-content:center;height:auto;padding:10px 0}}
+</style>
 </head>
 <body>
-<nav><div class="container"><a href="#" class="logo">Mingo<span>.</span>Services</a><ul class="nav-links"><li><a href="#services">Services</a></li><li><a href="#about">About</a></li><li><a href="#pricing">Pricing</a></li></ul><div style="display:flex;gap:10px"><a href="https://breezy-steaks-hear.loca.lt/login" class="btn-secondary" style="padding:8px 18px;font-size:0.85rem">Login</a><a href="https://breezy-steaks-hear.loca.lt/signup" class="nav-cta">Sign Up</a></div></div></nav>
 
+<nav><div class="container c">
+<a href="#" onclick="showPage('landing');return false" class="logo">Mingo<span>.</span>Services</a>
+<div class="nav-r" id="navAuth">
+<a href="#" onclick="showPage('login');return false" class="btn-o">Login</a>
+<a href="#" onclick="showPage('signup');return false" class="btn">Sign Up</a>
+</div>
+<div class="nav-r" id="navUser" style="display:none">
+<span id="navName"></span>
+<a href="#" onclick="doLogout();return false" style="color:var(--accent);text-decoration:none">Logout</a>
+</div>
+</div></nav>
+
+<!-- LANDING -->
+<div id="page-landing" class="page active">
 <section class="hero"><div class="container">
-<h1>AI that works.<br><span>Teams that ship.</span></h1>
-<p>We audit, automate, and optimize one business process for you in 48 hours — using AI. Flat fee, fast turnaround, real results.</p>
-<div class="hero-buttons"><a href="https://breezy-steaks-hear.loca.lt/signup" class="btn-primary">Get Automated — $497</a><a href="#services" class="btn-secondary">How It Works</a></div>
+<h1>One process.<br><span>Automated in 48 hours.</span></h1>
+<p>We audit, automate, and optimize one business process using AI. Flat fee, fast turnaround, real results — or your money back.</p>
+<a href="#" onclick="showPage('signup');return false" class="btn" style="font-size:1.1rem;padding:16px 48px">Get Automated — $497</a>
 </div></section>
 
-<section id="services"><div class="container">
-<div class="section-label">What We Do</div>
-<h2 class="section-title">AI-powered services for modern teams</h2>
-<p class="section-subtitle">From automation to full agent teams, we deliver AI solutions that fit your workflow.</p>
-<div class="services-grid">
-<div class="service-card"><div class="service-icon"><i class="ph ph-gear"></i></div><h3>Automation</h3><p>Turn repetitive workflows into autonomous pipelines. Email, data entry, reporting — handled by AI while your team focuses on what matters.</p></div>
-<div class="service-card"><div class="service-icon"><i class="ph ph-users-three"></i></div><h3>Agent Teams</h3><p>Deploy specialized AI agents that collaborate like a real department. Marketing, sales, HR, engineering — each agent handles its domain.</p></div>
-<div class="service-card"><div class="service-icon"><i class="ph ph-brain"></i></div><h3>Consulting</h3><p>Strategy and implementation guidance from AI experts. We audit your operations, identify automation opportunities, and build a roadmap.</p></div>
-<div class="service-card"><div class="service-icon"><i class="ph ph-plugs-connected"></i></div><h3>Integration</h3><p>Connect AI into your existing stack. Slack, Notion, Salesforce, custom APIs — we bridge the gap between off-the-shelf and bespoke.</p></div>
-<div class="service-card"><div class="service-icon"><i class="ph ph-cloud-check"></i></div><h3>Managed Ops</h3><p>Full-service AI operations. We run, monitor, and continuously improve your AI systems so you get results without the overhead.</p></div>
+<section><div class="container">
+<div class="label">How It Works</div>
+<h2>Your automation, delivered</h2>
+<div class="g2" style="margin-top:30px">
+<div class="step"><div class="step-num">1</div><h3>You describe</h3><p>Tell us what repetitive task is eating your time.</p></div>
+<div class="step"><div class="step-num">2</div><h3>We audit</h3><p>We analyze your workflow and design the AI blueprint.</p></div>
+<div class="step"><div class="step-num">3</div><h3>We build</h3><p>Custom AI automation built and tested in 48 hours.</p></div>
+<div class="step"><div class="step-num">4</div><h3>You're automated</h3><p>Documentation + training + 30 days of support.</p></div>
 </div></div></section>
 
-<section id="about"><div class="container"><div class="about-grid">
-<div class="about-text">
-<div class="section-label">Who We Are</div>
-<h2 class="section-title">Built for the AI era</h2>
-<p>Mingo Services was founded on a simple belief: AI should work for you, not the other way around. We build systems that don't just automate tasks — they multiply what your team can achieve.</p>
-<p>Every solution we deliver is battle-tested on our own operations first. If it doesn't make our team faster, we don't ship it to yours.</p>
-<ul class="diff-list">
-<li><span class="dot">▸</span><span><strong>No black boxes.</strong> Every system comes with transparency and control built in.</span></li>
-<li><span class="dot">▸</span><span><strong>Outcomes over hype.</strong> We measure success by what ships, not what demos well.</span></li>
-<li><span class="dot">▸</span><span><strong>Human in the loop.</strong> AI augments your team — it doesn't replace them.</span></li>
-<li><span class="dot">▸</span><span><strong>Continuous improvement.</strong> Our systems learn and get better over time.</span></li>
-</ul></div>
-<div class="about-visual"><div class="stat-number">24/7</div><div class="stat-label">Always-on AI operations</div>
-<div class="stat-grid">
-<div class="trust-item"><div class="num">5+</div><div class="lbl">AI Services</div></div>
-<div class="trust-item"><div class="num">100%</div><div class="lbl">Remote-First</div></div>
-<div class="trust-item"><div class="num">$0</div><div class="lbl">Setup Fees</div></div>
-<div class="trust-item"><div class="num">&lt;24h</div><div class="lbl">Response Time</div></div>
+<section><div class="container">
+<div class="label">Pricing</div>
+<h2>Simple & transparent</h2>
+<div class="grid3">
+<div class="card featured"><div class="badge">Launch Offer</div>
+<h3>Automation Sprint</h3><div class="price">$497</div><div class="price-sub">one-time · 48hr delivery</div>
+<ul class="feat"><li>Process audit & report</li><li>Custom AI workflow</li><li>Documentation & training</li><li>30 days support</li><li>Money-back guarantee</li></ul>
+<a href="#" onclick="showPage('signup');return false" class="btn" style="width:100%">Book Your Sprint</a>
+</div>
+<div class="card"><h3>Monthly Retainer</h3><div class="price">$197<span style="font-size:.9rem;color:var(--text2)">/mo</span></div><div class="price-sub">ongoing support</div>
+<ul class="feat"><li>Monthly optimization</li><li>New automation requests</li><li>Priority support</li><li>Quarterly calls</li><li>Cancel anytime</li></ul>
+<a href="#" onclick="showPage('signup');return false" class="btn-o" style="width:100%">Get Started</a>
+</div>
+<div class="card"><h3>Enterprise</h3><div class="price">Custom</div><div class="price-sub">tailored solution</div>
+<ul class="feat"><li>Full department automation</li><li>Dedicated AI team</li><li>Custom integrations</li><li>99.9% SLA</li><li>24/7 support</li></ul>
+<a href="#" onclick="showPage('signup');return false" class="btn-o" style="width:100%">Contact Us</a>
+</div>
+</div></div></section>
+<footer><div class="container"><p>&copy; 2026 Mingo Services. AI that works. Teams that ship.</p></div></footer>
+</div>
+
+<!-- LOGIN -->
+<div id="page-login" class="page"><div class="auth-box">
+<h2>Login to Mingo Services</h2>
+<div id="loginErr"></div>
+<label>Email</label><input type="email" id="loginEmail" placeholder="you@example.com">
+<label>Password</label><input type="password" id="loginPass">
+<button class="btn" style="width:100%" onclick="apiLogin()">Login</button>
+<div class="link">No account? <a onclick="showPage('signup')">Sign up</a></div>
+<div class="link"><a onclick="showPage('landing')">← Back home</a></div>
 </div></div>
-</div></div></section>
 
-<section id="pricing"><div class="container">
-<div class="section-label">Pricing</div>
-<h2 class="section-title">AI Automation Sprint</h2>
-<p class="section-subtitle">One process. 48 hours. Flat fee. We automate it or you don't pay.</p>
-<div class="pricing-grid">
-<div class="pricing-card featured"><div class="pricing-badge">Launch Offer</div><h3>Automation Sprint</h3><p style="color:var(--text-secondary);margin-bottom:8px">One business process, fully automated</p><div class="price">$497</div><div class="price-sub">one-time · delivered in 48 hours</div><ul class="pricing-features"><li><i class="ph ph-check-circle"></i> Process audit & opportunity report</li><li><i class="ph ph-check-circle"></i> Custom AI workflow setup</li><li><i class="ph ph-check-circle"></i> Documentation & training</li><li><i class="ph ph-check-circle"></i> 30 days of support</li><li><i class="ph ph-check-circle"></i> Money-back if not satisfied</li></ul><button class="btn-primary" onclick="location.href='https://breezy-steaks-hear.loca.lt/signup'">Book Your Sprint</button></div>
-<div class="pricing-card"><h3>Monthly Retainer</h3><p style="color:var(--text-secondary);margin-bottom:8px">Ongoing AI operations & support</p><div class="price">$197<span>/mo</span></div><div class="price-sub">after your sprint is complete</div><ul class="pricing-features"><li><i class="ph ph-check-circle"></i> Monthly process optimization</li><li><i class="ph ph-check-circle"></i> New automation requests</li><li><i class="ph ph-check-circle"></i> Priority support (4hr)</li><li><i class="ph ph-check-circle"></i> Quarterly strategy calls</li><li><i class="ph ph-check-circle"></i> Cancel anytime</li></ul><button class="btn-secondary" onclick="location.href='https://breezy-steaks-hear.loca.lt/signup'">Get Started</button></div>
-<div class="pricing-card"><h3>Enterprise</h3><p style="color:var(--text-secondary);margin-bottom:8px">Multiple processes, dedicated team</p><div class="price">Custom</div><div class="price-sub">tailored to your needs</div><ul class="pricing-features"><li><i class="ph ph-check-circle"></i> Full department automation</li><li><i class="ph ph-check-circle"></i> Dedicated AI agent team</li><li><i class="ph ph-check-circle"></i> Custom integrations</li><li><i class="ph ph-check-circle"></i> 99.9% SLA</li><li><i class="ph ph-check-circle"></i> 24/7 support</li></ul><button class="btn-secondary" onclick="location.href='https://breezy-steaks-hear.loca.lt/signup'">Contact Us</button></div>
-</div></div></section>
+<!-- SIGNUP -->
+<div id="page-signup" class="page"><div class="auth-box">
+<h2>Create Your Account</h2>
+<div id="signupErr"></div>
+<label>Full Name</label><input type="text" id="signupName" placeholder="Your name">
+<label>Company (optional)</label><input type="text" id="signupCompany" placeholder="Your company">
+<label>Email</label><input type="email" id="signupEmail" placeholder="you@example.com">
+<label>Password</label><input type="password" id="signupPass" placeholder="Min 8 chars, 1 uppercase, 1 number">
+<button class="btn" style="width:100%" onclick="apiSignup()">Create Account</button>
+<div class="link">Already have an account? <a onclick="showPage('login')">Login</a></div>
+<div class="link"><a onclick="showPage('landing')">← Back home</a></div>
+</div></div>
 
-<section class="cta-section"><div class="container"><div class="section-label">Ready?</div><h2 class="section-title">Let AI do the heavy lifting.</h2><a href="https://breezy-steaks-hear.loca.lt/signup" class="btn-primary" style="font-size:1.1rem;padding:16px 48px">Start Your Sprint →</a></div></section>
+<!-- DASHBOARD -->
+<div id="page-dashboard" class="page"><div class="container dash">
+<h1 id="dashHi">Welcome</h1>
+<p style="color:var(--text2)" id="dashEmail"></p>
+<div class="stats" id="dashStats"></div>
+<div class="section-box"><h3>Your Services</h3><div id="dashServices"></div></div>
+<div class="section-box"><h3>Request New Automation</h3>
+<div id="svcMsg"></div>
+<label>What process do you want automated?</label>
+<input type="text" id="svcProcess" placeholder="e.g., Email follow-ups, data entry, report generation...">
+<label>Describe your workflow</label>
+<textarea id="svcDesc" placeholder="What you do manually today and what the ideal outcome looks like."></textarea>
+<button class="btn" onclick="reqService()">Request Service</button>
+</div>
+<div class="section-box" id="dashPayments"></div>
+</div></div>
 
-<div class="trust-bar container" style="margin-bottom:60px"><div class="trust-item"><div class="num">5+</div><div class="lbl">AI Services</div></div><div class="trust-item"><div class="num">24/7</div><div class="lbl">Automated Ops</div></div><div class="trust-item"><div class="num">&lt;24h</div><div class="lbl">Response Time</div></div><div class="trust-item"><div class="num">$0</div><div class="lbl">Setup Fees</div></div></div>
-
-<footer><div class="container"><a href="#" class="logo" style="font-size:1.1rem">Mingo<span>.</span>Services</a><p>&copy; 2026 Mingo Services. AI that works. Teams that ship.</p></div></footer>
-
-<div class="ls-overlay" id="lsOverlay"><div class="ls-modal"><div class="spinner" style="width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px"></div><h3>Redirecting to checkout...</h3><p style="color:var(--text-secondary)">You'll be redirected to Stripe's secure payment page.</p></div></div>
-
-<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+<!-- ADMIN -->
+<div id="page-admin" class="page"><div class="container dash">
+<h1>Admin Panel</h1>
+<div class="stats" id="adminStats"></div>
+<div class="section-box"><h3>Customers</h3><div id="adminUsers"></div></div>
+<div class="section-box"><h3>Services</h3><div id="adminServices"></div></div>
+<div class="section-box"><h3>Payments</h3><div id="adminPayments"></div></div>
+</div></div>
 
 <script>
-// Stripe Payment Links — direct checkout URLs, no backend needed
-const PAYMENT_LINKS = {
-  starter: 'https://buy.stripe.com/cNi5kE2mUcDo95MdMu2ZO00',
-  pro:     'https://buy.stripe.com/eVqfZi6Da0UG95McIq2ZO02',
-  enterprise: null
-};
+const API = 'https://06800987316f5f77-187-124-27-195.serveousercontent.com';
+let currentUser = null;
 
-function openCheckout(plan) {
-  if (plan === 'enterprise') {
-    alert('Contact us at mingosplan@outlook.com for Enterprise pricing.');
-    return;
-  }
-  window.location.href = PAYMENT_LINKS[plan];
+async function api(path, opts={}) {
+  const r = await fetch(API+path, {...opts, credentials:'include', headers:{'Content-Type':'application/json',...opts.headers}});
+  return r.json();
 }
-function closeCheckout(){document.getElementById('lsOverlay').classList.remove('active')}
+
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const el = document.getElementById('page-'+name);
+  if (el) el.classList.add('active');
+  if (name==='dashboard' && currentUser) loadDashboard();
+  if (name==='admin' && currentUser) loadAdmin();
+}
+
+async function checkAuth() {
+  try {
+    const d = await api('/api/me');
+    if (d.user) {
+      currentUser = d.user;
+      document.getElementById('navAuth').style.display='none';
+      document.getElementById('navUser').style.display='flex';
+      document.getElementById('navName').textContent = d.user.name||d.user.email;
+      if (d.user.role==='admin') showPage('admin');
+      else showPage('dashboard');
+    } else {
+      showPage('landing');
+    }
+  } catch(e) { showPage('landing'); }
+}
+
+async function apiLogin() {
+  const e = document.getElementById('loginEmail').value;
+  const p = document.getElementById('loginPass').value;
+  const err = document.getElementById('loginErr');
+  try {
+    const d = await api('/api/login', {method:'POST', body:JSON.stringify({email:e, password:p})});
+    if (d.ok) {
+      currentUser = d.user;
+      document.getElementById('navAuth').style.display='none';
+      document.getElementById('navUser').style.display='flex';
+      document.getElementById('navName').textContent = d.user.name||d.user.email;
+      d.user.role==='admin' ? showPage('admin') : showPage('dashboard');
+    } else {
+      err.innerHTML = '<div class="err">'+d.error+'</div>';
+    }
+  } catch(x) { err.innerHTML = '<div class="err">Connection error</div>'; }
+}
+
+async function apiSignup() {
+  const err = document.getElementById('signupErr');
+  const data = {
+    name: document.getElementById('signupName').value,
+    company: document.getElementById('signupCompany').value,
+    email: document.getElementById('signupEmail').value,
+    password: document.getElementById('signupPass').value
+  };
+  try {
+    const d = await api('/api/signup', {method:'POST', body:JSON.stringify(data)});
+    if (d.ok) {
+      currentUser = d.user;
+      document.getElementById('navAuth').style.display='none';
+      document.getElementById('navUser').style.display='flex';
+      document.getElementById('navName').textContent = d.user.name;
+      showPage('dashboard');
+    } else {
+      err.innerHTML = '<div class="err">'+d.error+'</div>';
+    }
+  } catch(x) { err.innerHTML = '<div class="err">Connection error</div>'; }
+}
+
+async function doLogout() {
+  await api('/api/logout');
+  currentUser = null;
+  document.getElementById('navAuth').style.display='flex';
+  document.getElementById('navUser').style.display='none';
+  showPage('landing');
+}
+
+async function loadDashboard() {
+  const d = await api('/api/me');
+  if (!d.user) return showPage('landing');
+  document.getElementById('dashHi').textContent = 'Welcome, '+(d.user.name||'there');
+  document.getElementById('dashEmail').textContent = d.user.email;
+  const svcs = d.services||[];
+  document.getElementById('dashStats').innerHTML = `
+    <div class="stat-box"><div class="val">${svcs.length}</div><div class="lbl">Services</div></div>
+    <div class="stat-box"><div class="val">${svcs.filter(s=>s.status==='completed').length}</div><div class="lbl">Completed</div></div>
+    <div class="stat-box"><div class="val">${svcs.filter(s=>s.status==='in_progress').length}</div><div class="lbl">In Progress</div></div>
+    <div class="stat-box"><div class="val">${(d.payments||[]).length}</div><div class="lbl">Payments</div></div>`;
+  if (svcs.length) {
+    document.getElementById('dashServices').innerHTML = '<table><tr><th>Service</th><th>Process</th><th>Status</th><th>Date</th></tr>'+
+    svcs.map(s=>`<tr><td>${s.name}</td><td>${s.process||'—'}</td><td><span class="badge-s badge-${s.status==='completed'?'done':s.status==='in_progress'?'progress':'pending'}">${s.status}</span></td><td>${(s.created_at||'').slice(0,10)}</td></tr>`).join('')+'</table>';
+  } else {
+    document.getElementById('dashServices').innerHTML = '<p style="color:var(--text2)">No services yet. Request your first automation above!</p>';
+  }
+}
+
+async function reqService() {
+  const p = document.getElementById('svcProcess').value;
+  const d = document.getElementById('svcDesc').value;
+  if (!p) return;
+  const body = new URLSearchParams({process:p, description:d});
+  await fetch(API+'/service/request', {method:'POST', credentials:'include', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body});
+  document.getElementById('svcMsg').innerHTML = '<div class="success">Service requested! We'll review within 24 hours.</div>';
+  document.getElementById('svcProcess').value='';
+  document.getElementById('svcDesc').value='';
+  loadDashboard();
+}
+
+async function loadAdmin() {
+  const d = await api('/api/me');
+  if (!d.user || d.user.role!=='admin') return showPage('landing');
+  const s = await api('/api/admin/stats');
+  document.getElementById('adminStats').innerHTML = `
+    <div class="stat-box"><div class="rev">$${(s.totalRevenue/100).toFixed(0)}</div><div class="lbl">Revenue</div></div>
+    <div class="stat-box"><div class="val">${s.totalUsers}</div><div class="lbl">Customers</div></div>
+    <div class="stat-box"><div class="val">${s.activeServices}</div><div class="lbl">Active</div></div>
+    <div class="stat-box"><div class="val">${s.completedServices}</div><div class="lbl">Done</div></div>`;
+  // Full admin data from EJS endpoint
+  try {
+    const html = await (await fetch(API+'/admin', {credentials:'include'})).text();
+    // Parse tables from HTML
+    const sections = ['adminUsers','adminServices','adminPayments'];
+    const tables = html.match(/<table>[\s\S]*?<\/table>/g)||[];
+    sections.forEach((id,i)=>{
+      if (tables[i]) document.getElementById(id).innerHTML = tables[i];
+    });
+  } catch(e) {}
+}
+
+checkAuth();
 </script>
 </body>
 </html>
