@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mingo Services — AI that works. Teams that ship.">
+  <meta property="og:title" content="Mingo Services — AI that works. Teams that ship.">
+  <meta property="og:description" content="AI-powered automation, agent teams, and consulting for modern businesses.">
+  <meta property="og:type" content="website">
+  <title>Mingo Services — AI that works. Teams that ship.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#06060E;--surface:#0D0D1A;--surface-elevated:#151528;--border:#1E1E36;--accent:#FF5C3A;--text-primary:#F0F0F7;--text-secondary:#9898B0;--text-muted:#606078;--gradient-1:linear-gradient(135deg,#FF5C3A 0%,#FF3860 100%)}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text-primary);line-height:1.6;-webkit-font-smoothing:antialiased}
+    h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.02em}
+    .container{max-width:1200px;margin:0 auto;padding:0 24px}
+    nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(6,6,14,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    nav .container{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .logo{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;color:var(--text-primary);text-decoration:none}
+    .logo span{color:var(--accent)}
+    .nav-links{display:flex;gap:32px;list-style:none}
+    .nav-links a{color:var(--text-secondary);text-decoration:none;font-size:0.9rem;transition:color 0.2s}
+    .nav-links a:hover{color:var(--text-primary)}
+    .nav-cta{background:var(--gradient-1);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;font-family:'Inter',sans-serif}
+    .nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(255,92,58,0.4)}
+    .hero{padding:160px 0 100px;text-align:center;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(255,92,58,0.08) 0%,transparent 70%);pointer-events:none}
+    .hero h1{font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.1;margin-bottom:24px}
+    .hero h1 span{background:var(--gradient-1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero p{font-size:1.2rem;color:var(--text-secondary);max-width:600px;margin:0 auto 40px}
+    .hero-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+    .btn-primary{background:var(--gradient-1);color:#fff;border:none;padding:14px 36px;border-radius:10px;font-size:1rem;font-weight:600;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;text-decoration:none;display:inline-block}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(255,92,58,0.5)}
+    .btn-secondary{background:transparent;color:var(--text-primary);border:1px solid var(--border);padding:14px 36px;border-radius:10px;font-size:1rem;font-weight:500;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block}
+    .btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+    section{padding:100px 0}
+    .section-label{color:var(--accent);font-weight:600;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px}
+    .section-title{font-size:clamp(2rem,4vw,3rem);margin-bottom:16px}
+    .section-subtitle{color:var(--text-secondary);font-size:1.1rem;max-width:600px;margin-bottom:60px}
+    .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+    .service-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:36px 28px;transition:all 0.3s}
+    .service-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 8px 40px rgba(255,92,58,0.1)}
+    .service-icon{font-size:2rem;color:var(--accent);margin-bottom:16px}
+    .service-card h3{font-size:1.25rem;margin-bottom:8px}
+    .service-card p{color:var(--text-secondary);font-size:0.95rem}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+    .about-text p{color:var(--text-secondary);margin-bottom:24px;font-size:1.05rem}
+    .diff-list{list-style:none;display:grid;gap:16px}
+    .diff-list li{display:flex;gap:12px;align-items:flex-start}
+    .diff-list .dot{color:var(--accent);font-size:1.2rem;margin-top:2px}
+    .about-visual{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px;text-align:center}
+    .stat-number{font-family:'Space Grotesk',sans-serif;font-size:3.5rem;font-weight:700;color:var(--accent)}
+    .stat-label{color:var(--text-secondary);font-size:0.95rem;margin-top:4px}
+    .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:24px}
+    .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+    .pricing-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:40px 28px;text-align:center;transition:all 0.3s;position:relative}
+    .pricing-card.featured{border-color:var(--accent);box-shadow:0 0 40px rgba(255,92,58,0.15)}
+    .pricing-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gradient-1);color:#fff;padding:4px 16px;border-radius:20px;font-size:0.8rem;font-weight:600}
+    .pricing-card h3{font-size:1.3rem;margin-bottom:4px}
+    .price{font-family:'Space Grotesk',sans-serif;font-size:3rem;font-weight:700;margin:16px 0 4px}
+    .price span{font-size:1rem;font-weight:400;color:var(--text-secondary)}
+    .price-sub{color:var(--text-muted);font-size:0.85rem;margin-bottom:24px}
+    .pricing-features{list-style:none;text-align:left;margin-bottom:28px}
+    .pricing-features li{padding:8px 0;color:var(--text-secondary);font-size:0.9rem;display:flex;gap:8px;align-items:center}
+    .pricing-features li i{color:var(--accent)}
+    .pricing-card .btn-primary{width:100%}
+    .trust-bar{display:flex;gap:48px;justify-content:center;flex-wrap:wrap;padding:40px;background:var(--surface);border:1px solid var(--border);border-radius:16px}
+    .trust-item{text-align:center}
+    .trust-item .num{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:var(--accent)}
+    .trust-item .lbl{color:var(--text-secondary);font-size:0.85rem;margin-top:4px}
+    .cta-section{text-align:center}
+    .cta-section .section-title{margin-bottom:40px}
+    footer{border-top:1px solid var(--border);padding:40px 0}
+    footer .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+    footer p{color:var(--text-muted);font-size:0.85rem}
+    .ls-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:200;justify-content:center;align-items:center}
+    .ls-overlay.active{display:flex}
+    .ls-modal{background:var(--surface-elevated);border:1px solid var(--border);border-radius:16px;padding:32px;max-width:480px;width:90%;text-align:center}
+    .ls-modal h3{margin-bottom:8px}
+    .ls-modal p{color:var(--text-secondary);margin-bottom:24px}
+    @media(max-width:768px){.about-grid{grid-template-columns:1fr}.nav-links{display:none}.hero{padding:120px 0 60px}section{padding:60px 0}.trust-bar{gap:24px}}
+  </style>
+</head>
+<body>
+<nav><div class="container"><a href="#" class="logo">Mingo<span>.</span>Services</a><ul class="nav-links"><li><a href="#services">Services</a></li><li><a href="#about">About</a></li><li><a href="#pricing">Pricing</a></li></ul><button class="nav-cta" onclick="openCheckout('pro')">Get Started</button></div></nav>
+
+<section class="hero"><div class="container">
+<h1>AI that works.<br><span>Teams that ship.</span></h1>
+<p>We design and deploy AI systems that automate operations, multiply team output, and build your competitive edge — no PhD required.</p>
+<div class="hero-buttons"><a href="#pricing" class="btn-primary">View Plans</a><a href="#services" class="btn-secondary">What We Do</a></div>
+</div></section>
+
+<section id="services"><div class="container">
+<div class="section-label">What We Do</div>
+<h2 class="section-title">AI-powered services for modern teams</h2>
+<p class="section-subtitle">From automation to full agent teams, we deliver AI solutions that fit your workflow.</p>
+<div class="services-grid">
+<div class="service-card"><div class="service-icon"><i class="ph ph-gear"></i></div><h3>Automation</h3><p>Turn repetitive workflows into autonomous pipelines. Email, data entry, reporting — handled by AI while your team focuses on what matters.</p></div>
+<div class="service-card"><div class="service-icon"><i class="ph ph-users-three"></i></div><h3>Agent Teams</h3><p>Deploy specialized AI agents that collaborate like a real department. Marketing, sales, HR, engineering — each agent handles its domain.</p></div>
+<div class="service-card"><div class="service-icon"><i class="ph ph-brain"></i></div><h3>Consulting</h3><p>Strategy and implementation guidance from AI experts. We audit your operations, identify automation opportunities, and build a roadmap.</p></div>
+<div class="service-card"><div class="service-icon"><i class="ph ph-plugs-connected"></i></div><h3>Integration</h3><p>Connect AI into your existing stack. Slack, Notion, Salesforce, custom APIs — we bridge the gap between off-the-shelf and bespoke.</p></div>
+<div class="service-card"><div class="service-icon"><i class="ph ph-cloud-check"></i></div><h3>Managed Ops</h3><p>Full-service AI operations. We run, monitor, and continuously improve your AI systems so you get results without the overhead.</p></div>
+</div></div></section>
+
+<section id="about"><div class="container"><div class="about-grid">
+<div class="about-text">
+<div class="section-label">Who We Are</div>
+<h2 class="section-title">Built for the AI era</h2>
+<p>Mingo Services was founded on a simple belief: AI should work for you, not the other way around. We build systems that don't just automate tasks — they multiply what your team can achieve.</p>
+<p>Every solution we deliver is battle-tested on our own operations first. If it doesn't make our team faster, we don't ship it to yours.</p>
+<ul class="diff-list">
+<li><span class="dot">▸</span><span><strong>No black boxes.</strong> Every system comes with transparency and control built in.</span></li>
+<li><span class="dot">▸</span><span><strong>Outcomes over hype.</strong> We measure success by what ships, not what demos well.</span></li>
+<li><span class="dot">▸</span><span><strong>Human in the loop.</strong> AI augments your team — it doesn't replace them.</span></li>
+<li><span class="dot">▸</span><span><strong>Continuous improvement.</strong> Our systems learn and get better over time.</span></li>
+</ul></div>
+<div class="about-visual"><div class="stat-number">24/7</div><div class="stat-label">Always-on AI operations</div>
+<div class="stat-grid">
+<div class="trust-item"><div class="num">5+</div><div class="lbl">AI Services</div></div>
+<div class="trust-item"><div class="num">100%</div><div class="lbl">Remote-First</div></div>
+<div class="trust-item"><div class="num">$0</div><div class="lbl">Setup Fees</div></div>
+<div class="trust-item"><div class="num">&lt;24h</div><div class="lbl">Response Time</div></div>
+</div></div>
+</div></div></section>
+
+<section id="pricing"><div class="container">
+<div class="section-label">Pricing</div>
+<h2 class="section-title">Choose your plan</h2>
+<p class="section-subtitle">Simple, transparent pricing with no hidden fees. All plans include a free trial.</p>
+<div class="pricing-grid">
+<div class="pricing-card"><h3>Starter</h3><p style="color:var(--text-secondary);margin-bottom:8px">For individuals and small teams</p><div class="price">$12<span>/mo</span></div><div class="price-sub">or $10/seat/mo billed annually</div><ul class="pricing-features"><li><i class="ph ph-check-circle"></i> Up to 5 seats</li><li><i class="ph ph-check-circle"></i> Core automation workflows</li><li><i class="ph ph-check-circle"></i> Email support (24hr)</li><li><i class="ph ph-check-circle"></i> Basic analytics</li></ul><button class="btn-primary" onclick="openCheckout('starter')">Start Trial</button></div>
+<div class="pricing-card featured"><div class="pricing-badge">Most Popular</div><h3>Pro</h3><p style="color:var(--text-secondary);margin-bottom:8px">For growing teams</p><div class="price">$25<span>/mo</span></div><div class="price-sub">or $20/seat/mo billed annually</div><ul class="pricing-features"><li><i class="ph ph-check-circle"></i> Unlimited seats</li><li><i class="ph ph-check-circle"></i> Advanced automation</li><li><i class="ph ph-check-circle"></i> AI agent teams</li><li><i class="ph ph-check-circle"></i> Priority support (4hr)</li><li><i class="ph ph-check-circle"></i> Custom integrations</li></ul><button class="btn-primary" onclick="openCheckout('pro')">Start Trial</button></div>
+<div class="pricing-card"><h3>Enterprise</h3><p style="color:var(--text-secondary);margin-bottom:8px">For organizations</p><div class="price">Custom</div><div class="price-sub">tailored to your needs</div><ul class="pricing-features"><li><i class="ph ph-check-circle"></i> Everything in Pro</li><li><i class="ph ph-check-circle"></i> Dedicated agent team</li><li><i class="ph ph-check-circle"></i> Custom AI training</li><li><i class="ph ph-check-circle"></i> 99.9% SLA</li><li><i class="ph ph-check-circle"></i> 24/7 phone support</li></ul><button class="btn-secondary" onclick="openCheckout('enterprise')">Contact Sales</button></div>
+</div></div></section>
+
+<section class="cta-section"><div class="container"><div class="section-label">Ready?</div><h2 class="section-title">Let AI do the heavy lifting.</h2><a href="#pricing" class="btn-primary" style="font-size:1.1rem;padding:16px 48px">Get Started — Free Trial</a></div></section>
+
+<div class="trust-bar container" style="margin-bottom:60px"><div class="trust-item"><div class="num">5+</div><div class="lbl">AI Services</div></div><div class="trust-item"><div class="num">24/7</div><div class="lbl">Automated Ops</div></div><div class="trust-item"><div class="num">&lt;24h</div><div class="lbl">Response Time</div></div><div class="trust-item"><div class="num">$0</div><div class="lbl">Setup Fees</div></div></div>
+
+<footer><div class="container"><a href="#" class="logo" style="font-size:1.1rem">Mingo<span>.</span>Services</a><p>&copy; 2026 Mingo Services. AI that works. Teams that ship.</p></div></footer>
+
+<div class="ls-overlay" id="lsOverlay"><div class="ls-modal"><h3>Ready to get started?</h3><p id="lsPlanName">You're selecting the Pro plan.</p><button class="btn-primary" onclick="window.open('https://lemonsqueezy.com','_blank');closeCheckout()" style="margin-bottom:12px">Proceed to Checkout</button><br><a href="#" onclick="closeCheckout();return false" style="color:var(--text-muted);font-size:0.85rem">Maybe later</a></div></div>
+
+<script>
+function openCheckout(p){document.getElementById('lsPlanName').textContent="You're selecting the "+{starter:'Starter',pro:'Pro',enterprise:'Enterprise'}[p]+" plan.";document.getElementById('lsOverlay').classList.add('active')}
+function closeCheckout(){document.getElementById('lsOverlay').classList.remove('active')}
+document.getElementById('lsOverlay').addEventListener('click',function(e){if(e.target===this)closeCheckout()})
+</script>
+</body>
+</html>
