@@ -150,49 +150,19 @@
 <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
 
 <script>
-// Stripe Price IDs — created via API
-const STRIPE_PRICES = {
-  starter: { monthly: 'price_1TzklIJEmAzZX26pMWmIKHt4', annual: 'price_1TzklJJEmAzZX26pAhDsiQCn' },
-  pro:     { monthly: 'price_1TzklJJEmAzZX26psOLP3TOx',     annual: 'price_1TzklJJEmAzZX26pzemxJaHf' },
-  enterprise: { monthly: null }
+// Stripe Payment Links — direct checkout URLs, no backend needed
+const PAYMENT_LINKS = {
+  starter: 'https://buy.stripe.com/cNi5kE2mUcDo95MdMu2ZO00',
+  pro:     'https://buy.stripe.com/eVqfZi6Da0UG95McIq2ZO02',
+  enterprise: null
 };
 
-const stripe = Stripe('pk_live_51TziX8JEmAzZX26pgH1hlFkdwuHdPxjXJD0B5rsHAYUnmdOSRgi5jwSgtqrPQEioJC0ZLPHUipVsRsl9WQJKX9b800LEXTT9iM');
-
-const API_URL = 'https://yellow-pillows-smash.loca.lt';
-
-async function openCheckout(plan) {
+function openCheckout(plan) {
   if (plan === 'enterprise') {
-    document.getElementById('pricing').scrollIntoView({behavior:'smooth'});
     alert('Contact us at mingosplan@outlook.com for Enterprise pricing.');
     return;
   }
-  document.getElementById('lsOverlay').classList.add('active');
-  try {
-    const priceId = STRIPE_PRICES[plan].monthly;
-    const resp = await fetch(API_URL + '/api/create-checkout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Bypass-Tunnel-Reminder': 'true'
-      },
-      body: JSON.stringify({
-        plan: plan,
-        priceId: priceId,
-        successUrl: 'https://mingo-inc.github.io?success=true&plan=' + plan,
-        cancelUrl: 'https://mingo-inc.github.io?canceled=true'
-      })
-    });
-    const data = await resp.json();
-    if (data.url) {
-      window.location.href = data.url;
-    } else {
-      throw new Error(data.error || 'No checkout URL returned');
-    }
-  } catch(e) {
-    document.getElementById('lsOverlay').classList.remove('active');
-    alert('Checkout error: ' + (e.message || 'Please try again.'));
-  }
+  window.location.href = PAYMENT_LINKS[plan];
 }
 function closeCheckout(){document.getElementById('lsOverlay').classList.remove('active')}
 </script>
