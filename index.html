@@ -12,9 +12,10 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-
 .container{max-width:1100px;margin:0 auto;padding:0 24px}
 nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(6,6,14,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
 nav .c{display:flex;align-items:center;justify-content:space-between;height:60px}
-.logo{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;color:var(--text);text-decoration:none}.logo span{color:var(--accent)}
-.btn{background:linear-gradient(135deg,#FF5C3A,#FF3860);color:#fff;border:none;padding:10px 22px;border-radius:8px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-size:.9rem}
-.btn-o{background:transparent;color:var(--text);border:1px solid var(--border);padding:10px 22px;border-radius:8px;cursor:pointer;text-decoration:none;font-size:.9rem}
+.logo{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;color:var(--text);text-decoration:none;cursor:pointer}.logo span{color:var(--accent)}
+.btn{background:linear-gradient(135deg,#FF5C3A,#FF3860);color:#fff;border:none;padding:10px 22px;border-radius:8px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;font-size:.9rem;font-family:'Inter',sans-serif}
+.btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(255,92,58,.4)}
+.btn-o{background:transparent;color:var(--text);border:1px solid var(--border);padding:10px 22px;border-radius:8px;cursor:pointer;text-decoration:none;font-size:.9rem;font-family:'Inter',sans-serif;display:inline-block}
 .btn-o:hover{border-color:var(--accent);color:var(--accent)}
 section{padding:80px 0}
 .page{display:none}.page.active{display:block}
@@ -34,23 +35,19 @@ h2{font-family:'Space Grotesk',sans-serif;font-size:2rem;margin-bottom:14px}
 .price{font-family:'Space Grotesk',sans-serif;font-size:2.8rem;font-weight:700;margin:14px 0 4px}
 .price-sub{color:var(--text2);font-size:.85rem;margin-bottom:20px}
 .feat{list-style:none;text-align:left;margin-bottom:24px}.feat li{padding:6px 0;color:var(--text2);font-size:.88rem}
-.feat li::before{content:'✓ ';color:var(--accent)}
+.feat li::before{content:'\2713 ';color:var(--accent)}
 .g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
 .step{text-align:center}.step-num{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:var(--accent)}.step p{font-size:.88rem;color:var(--text2);margin-top:6px}
 footer{border-top:1px solid var(--border);padding:30px 0;text-align:center}
 footer p{color:var(--text2);font-size:.8rem}
-
-/* Auth forms */
 .auth-box{max-width:420px;margin:120px auto;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:40px}
 .auth-box h2{font-size:1.3rem;text-align:center;margin-bottom:20px}
 label{display:block;font-size:.85rem;margin-bottom:6px;color:var(--text2)}
 input,textarea{width:100%;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.9rem;margin-bottom:12px;font-family:inherit}
 input:focus,textarea:focus{outline:none;border-color:var(--accent)}
-.err{background:rgba(255,92,58,.1);color:var(--accent);padding:10px;border-radius:8px;margin-bottom:14px;font-size:.85rem}
-.success{background:rgba(34,197,94,.1);color:var(--green);padding:10px;border-radius:8px;margin-bottom:14px;font-size:.85rem}
-.link{text-align:center;margin-top:14px;font-size:.85rem;color:var(--text2)}.link a{color:var(--accent);cursor:pointer;text-decoration:none}
-
-/* Dashboard */
+.err{background:rgba(255,92,58,.1);color:var(--accent);padding:10px;border-radius:8px;margin-bottom:14px;font-size:.85rem;display:none}
+.success{background:rgba(34,197,94,.1);color:var(--green);padding:10px;border-radius:8px;margin-bottom:14px;font-size:.85rem;display:none}
+.link{text-align:center;margin-top:14px;font-size:.85rem;color:var(--text2)}.link a{color:var(--accent);cursor:pointer;text-decoration:underline}
 .dash{padding:100px 0}
 .dash h1{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;margin-bottom:4px}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:24px 0}
@@ -67,7 +64,7 @@ td{padding:8px;border-bottom:1px solid var(--border)}
 .badge-progress{background:rgba(59,130,246,.15);color:#3B82F6}
 .badge-done{background:rgba(34,197,94,.15);color:var(--green)}
 .rev{color:var(--green);font-size:2rem;font-weight:700}
-.loading{text-align:center;padding:60px;color:var(--text2)}.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}@keyframes spin{to{transform:rotate(360deg)}}
+.loading{text-align:center;padding:40px;color:var(--text2)}
 .nav-r{display:flex;gap:10px;align-items:center;font-size:.85rem}
 .nav-r span{color:var(--text2)}
 textarea{height:80px;resize:vertical}
@@ -77,25 +74,24 @@ textarea{height:80px;resize:vertical}
 <body>
 
 <nav><div class="container c">
-<a href="#" onclick="showPage('landing');return false" class="logo">Mingo<span>.</span>Services</a>
+<span class="logo" onclick="M.show('landing')">Mingo<span>.</span>Services</span>
 <div class="nav-r" id="navAuth">
-<a href="#" onclick="showPage('login');return false" class="btn-o">Login</a>
-<a href="#" onclick="showPage('signup');return false" class="btn">Sign Up</a>
+<span class="btn-o" onclick="M.show('login')" style="font-family:Inter,sans-serif">Login</span>
+<span class="btn" onclick="M.show('signup')">Sign Up</span>
 </div>
 <div class="nav-r" id="navUser" style="display:none">
 <span id="navName"></span>
-<a href="#" onclick="doLogout();return false" style="color:var(--accent);text-decoration:none">Logout</a>
+<span style="color:var(--accent);cursor:pointer;text-decoration:underline" onclick="M.logout()">Logout</span>
 </div>
 </div></nav>
 
 <!-- LANDING -->
-<div id="page-landing" class="page active">
+<div id="pg-landing" class="page active">
 <section class="hero"><div class="container">
 <h1>One process.<br><span>Automated in 48 hours.</span></h1>
 <p>We audit, automate, and optimize one business process using AI. Flat fee, fast turnaround, real results — or your money back.</p>
-<a href="#" onclick="showPage('signup');return false" class="btn" style="font-size:1.1rem;padding:16px 48px">Get Automated — $497</a>
+<span class="btn" onclick="M.show('signup')" style="font-size:1.1rem;padding:16px 48px">Get Automated — $497</span>
 </div></section>
-
 <section><div class="container">
 <div class="label">How It Works</div>
 <h2>Your automation, delivered</h2>
@@ -105,7 +101,6 @@ textarea{height:80px;resize:vertical}
 <div class="step"><div class="step-num">3</div><h3>We build</h3><p>Custom AI automation built and tested in 48 hours.</p></div>
 <div class="step"><div class="step-num">4</div><h3>You're automated</h3><p>Documentation + training + 30 days of support.</p></div>
 </div></div></section>
-
 <section><div class="container">
 <div class="label">Pricing</div>
 <h2>Simple & transparent</h2>
@@ -113,204 +108,242 @@ textarea{height:80px;resize:vertical}
 <div class="card featured"><div class="badge">Launch Offer</div>
 <h3>Automation Sprint</h3><div class="price">$497</div><div class="price-sub">one-time · 48hr delivery</div>
 <ul class="feat"><li>Process audit & report</li><li>Custom AI workflow</li><li>Documentation & training</li><li>30 days support</li><li>Money-back guarantee</li></ul>
-<a href="#" onclick="showPage('signup');return false" class="btn" style="width:100%">Book Your Sprint</a>
+<span class="btn" onclick="M.show('signup')" style="width:100%">Book Your Sprint</span>
 </div>
 <div class="card"><h3>Monthly Retainer</h3><div class="price">$197<span style="font-size:.9rem;color:var(--text2)">/mo</span></div><div class="price-sub">ongoing support</div>
 <ul class="feat"><li>Monthly optimization</li><li>New automation requests</li><li>Priority support</li><li>Quarterly calls</li><li>Cancel anytime</li></ul>
-<a href="#" onclick="showPage('signup');return false" class="btn-o" style="width:100%">Get Started</a>
+<span class="btn-o" onclick="M.show('signup')" style="width:100%">Get Started</span>
 </div>
 <div class="card"><h3>Enterprise</h3><div class="price">Custom</div><div class="price-sub">tailored solution</div>
 <ul class="feat"><li>Full department automation</li><li>Dedicated AI team</li><li>Custom integrations</li><li>99.9% SLA</li><li>24/7 support</li></ul>
-<a href="#" onclick="showPage('signup');return false" class="btn-o" style="width:100%">Contact Us</a>
+<span class="btn-o" onclick="M.show('signup')" style="width:100%">Contact Us</span>
 </div>
 </div></div></section>
 <footer><div class="container"><p>&copy; 2026 Mingo Services. AI that works. Teams that ship.</p></div></footer>
 </div>
 
 <!-- LOGIN -->
-<div id="page-login" class="page"><div class="auth-box">
-<h2>Login to Mingo Services</h2>
-<div id="loginErr"></div>
+<div id="pg-login" class="page"><div class="auth-box">
+<h2>Login</h2>
+<div class="err" id="loginErr"></div>
 <label>Email</label><input type="email" id="loginEmail" placeholder="you@example.com">
 <label>Password</label><input type="password" id="loginPass">
-<button class="btn" style="width:100%" onclick="apiLogin()">Login</button>
-<div class="link">No account? <a onclick="showPage('signup')">Sign up</a></div>
-<div class="link"><a onclick="showPage('landing')">← Back home</a></div>
+<button class="btn" style="width:100%" onclick="M.login()">Login</button>
+<div class="link">No account? <a onclick="M.show('signup')">Sign up</a> · <a onclick="M.show('landing')">Home</a></div>
 </div></div>
 
 <!-- SIGNUP -->
-<div id="page-signup" class="page"><div class="auth-box">
-<h2>Create Your Account</h2>
-<div id="signupErr"></div>
+<div id="pg-signup" class="page"><div class="auth-box">
+<h2>Create Account</h2>
+<div class="err" id="signupErr"></div>
 <label>Full Name</label><input type="text" id="signupName" placeholder="Your name">
 <label>Company (optional)</label><input type="text" id="signupCompany" placeholder="Your company">
 <label>Email</label><input type="email" id="signupEmail" placeholder="you@example.com">
-<label>Password</label><input type="password" id="signupPass" placeholder="Min 8 chars, 1 uppercase, 1 number">
-<button class="btn" style="width:100%" onclick="apiSignup()">Create Account</button>
-<div class="link">Already have an account? <a onclick="showPage('login')">Login</a></div>
-<div class="link"><a onclick="showPage('landing')">← Back home</a></div>
+<label>Password (8+ chars, 1 uppercase, 1 number)</label><input type="password" id="signupPass">
+<button class="btn" style="width:100%" onclick="M.signup()">Create Account</button>
+<div class="link"><a onclick="M.show('login')">Login</a> · <a onclick="M.show('landing')">Home</a></div>
 </div></div>
 
 <!-- DASHBOARD -->
-<div id="page-dashboard" class="page"><div class="container dash">
+<div id="pg-dashboard" class="page"><div class="container dash">
 <h1 id="dashHi">Welcome</h1>
 <p style="color:var(--text2)" id="dashEmail"></p>
 <div class="stats" id="dashStats"></div>
-<div class="section-box"><h3>Your Services</h3><div id="dashServices"></div></div>
+<div class="section-box">
+<h3>Pay for Your Sprint</h3>
+<div class="success" id="payMsg"></div>
+<span class="btn" onclick="M.checkout()" style="font-size:1rem;padding:14px 40px">Pay $497 via Stripe</span>
+</div>
+<div class="section-box"><h3>Your Services</h3><div id="dashServices"><p style="color:var(--text2)">Loading...</p></div></div>
 <div class="section-box"><h3>Request New Automation</h3>
-<div id="svcMsg"></div>
+<div class="success" id="svcMsg"></div>
 <label>What process do you want automated?</label>
 <input type="text" id="svcProcess" placeholder="e.g., Email follow-ups, data entry, report generation...">
 <label>Describe your workflow</label>
 <textarea id="svcDesc" placeholder="What you do manually today and what the ideal outcome looks like."></textarea>
-<button class="btn" onclick="reqService()">Request Service</button>
+<span class="btn" onclick="M.reqService()" style="width:100%">Request Service</span>
 </div>
 <div class="section-box" id="dashPayments"></div>
 </div></div>
 
 <!-- ADMIN -->
-<div id="page-admin" class="page"><div class="container dash">
+<div id="pg-admin" class="page"><div class="container dash">
 <h1>Admin Panel</h1>
-<div class="stats" id="adminStats"></div>
-<div class="section-box"><h3>Customers</h3><div id="adminUsers"></div></div>
-<div class="section-box"><h3>Services</h3><div id="adminServices"></div></div>
-<div class="section-box"><h3>Payments</h3><div id="adminPayments"></div></div>
+<div class="stats" id="adminStats"><div class="stat-box"><div class="val">...</div><div class="lbl">Loading</div></div></div>
+<div class="section-box"><h3>Services</h3><div id="adminServices"><p style="color:var(--text2)">Loading...</p></div></div>
+<div class="section-box"><h3>Recent Customers</h3><div id="adminUsers"><p style="color:var(--text2)">Loading...</p></div></div>
 </div></div>
 
 <script>
-const API = 'https://06800987316f5f77-187-124-27-195.serveousercontent.com';
-let currentUser = null;
+// API base URL — backend server
+var M = {
+  API: 'https://06800987316f5f77-187-124-27-195.serveousercontent.com',
+  user: null,
+  
+  api: async function(path, opts) {
+    opts = opts || {};
+    opts.credentials = 'include';
+    opts.headers = Object.assign({'Content-Type':'application/json'}, opts.headers||{});
+    var r = await fetch(M.API+path, opts);
+    return r.json();
+  },
 
-async function api(path, opts={}) {
-  const r = await fetch(API+path, {...opts, credentials:'include', headers:{'Content-Type':'application/json',...opts.headers}});
-  return r.json();
-}
+  show: function(name) {
+    var pages = document.querySelectorAll('.page');
+    for (var i=0; i<pages.length; i++) pages[i].classList.remove('active');
+    var el = document.getElementById('pg-'+name);
+    if (el) el.classList.add('active');
+    if (name==='dashboard' && M.user) M.loadDash();
+    if (name==='admin' && M.user) M.loadAdmin();
+    window.scrollTo(0,0);
+  },
 
-function showPage(name) {
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  const el = document.getElementById('page-'+name);
-  if (el) el.classList.add('active');
-  if (name==='dashboard' && currentUser) loadDashboard();
-  if (name==='admin' && currentUser) loadAdmin();
-}
-
-async function checkAuth() {
-  try {
-    const d = await api('/api/me');
-    if (d.user) {
-      currentUser = d.user;
-      document.getElementById('navAuth').style.display='none';
-      document.getElementById('navUser').style.display='flex';
-      document.getElementById('navName').textContent = d.user.name||d.user.email;
-      if (d.user.role==='admin') showPage('admin');
-      else showPage('dashboard');
-    } else {
-      showPage('landing');
+  login: async function() {
+    var err = document.getElementById('loginErr');
+    err.style.display = 'none';
+    try {
+      var d = await M.api('/api/login', {method:'POST', body:JSON.stringify({
+        email: document.getElementById('loginEmail').value,
+        password: document.getElementById('loginPass').value
+      })});
+      if (d.ok) {
+        M.setUser(d.user);
+      } else {
+        err.textContent = d.error || 'Login failed';
+        err.style.display = 'block';
+      }
+    } catch(e) {
+      err.textContent = 'Connection error — server may be down';
+      err.style.display = 'block';
     }
-  } catch(e) { showPage('landing'); }
-}
+  },
 
-async function apiLogin() {
-  const e = document.getElementById('loginEmail').value;
-  const p = document.getElementById('loginPass').value;
-  const err = document.getElementById('loginErr');
-  try {
-    const d = await api('/api/login', {method:'POST', body:JSON.stringify({email:e, password:p})});
-    if (d.ok) {
-      currentUser = d.user;
-      document.getElementById('navAuth').style.display='none';
-      document.getElementById('navUser').style.display='flex';
-      document.getElementById('navName').textContent = d.user.name||d.user.email;
-      d.user.role==='admin' ? showPage('admin') : showPage('dashboard');
-    } else {
-      err.innerHTML = '<div class="err">'+d.error+'</div>';
+  signup: async function() {
+    var err = document.getElementById('signupErr');
+    err.style.display = 'none';
+    try {
+      var d = await M.api('/api/signup', {method:'POST', body:JSON.stringify({
+        name: document.getElementById('signupName').value,
+        company: document.getElementById('signupCompany').value,
+        email: document.getElementById('signupEmail').value,
+        password: document.getElementById('signupPass').value
+      })});
+      if (d.ok) {
+        M.setUser(d.user);
+      } else {
+        err.textContent = d.error || 'Signup failed';
+        err.style.display = 'block';
+      }
+    } catch(e) {
+      err.textContent = 'Connection error — server may be down';
+      err.style.display = 'block';
     }
-  } catch(x) { err.innerHTML = '<div class="err">Connection error</div>'; }
-}
+  },
 
-async function apiSignup() {
-  const err = document.getElementById('signupErr');
-  const data = {
-    name: document.getElementById('signupName').value,
-    company: document.getElementById('signupCompany').value,
-    email: document.getElementById('signupEmail').value,
-    password: document.getElementById('signupPass').value
-  };
-  try {
-    const d = await api('/api/signup', {method:'POST', body:JSON.stringify(data)});
-    if (d.ok) {
-      currentUser = d.user;
-      document.getElementById('navAuth').style.display='none';
-      document.getElementById('navUser').style.display='flex';
-      document.getElementById('navName').textContent = d.user.name;
-      showPage('dashboard');
+  setUser: function(u) {
+    M.user = u;
+    document.getElementById('navAuth').style.display = 'none';
+    document.getElementById('navUser').style.display = 'flex';
+    document.getElementById('navName').textContent = (u.name||u.email);
+    u.role==='admin' ? M.show('admin') : M.show('dashboard');
+  },
+
+  logout: async function() {
+    await M.api('/api/logout');
+    M.user = null;
+    document.getElementById('navAuth').style.display = 'flex';
+    document.getElementById('navUser').style.display = 'none';
+    M.show('landing');
+  },
+
+  loadDash: async function() {
+    var d = await M.api('/api/me');
+    if (!d.user) return M.show('landing');
+    document.getElementById('dashHi').textContent = 'Welcome, '+(d.user.name||'there');
+    document.getElementById('dashEmail').textContent = d.user.email;
+    var svcs = d.services||[];
+    var p = d.payments||[];
+    document.getElementById('dashStats').innerHTML =
+      '<div class="stat-box"><div class="val">'+svcs.length+'</div><div class="lbl">Services</div></div>'+
+      '<div class="stat-box"><div class="val">'+svcs.filter(function(s){return s.status==='completed'}).length+'</div><div class="lbl">Completed</div></div>'+
+      '<div class="stat-box"><div class="val">'+svcs.filter(function(s){return s.status==='in_progress'}).length+'</div><div class="lbl">In Progress</div></div>'+
+      '<div class="stat-box"><div class="val">'+p.length+'</div><div class="lbl">Payments</div></div>';
+    if (svcs.length) {
+      document.getElementById('dashServices').innerHTML = '<table><tr><th>Service</th><th>Process</th><th>Status</th><th>Date</th></tr>'+
+      svcs.map(function(s){
+        var sc = s.status==='completed'?'done':s.status==='in_progress'?'progress':'pending';
+        return '<tr><td>'+s.name+'</td><td>'+(s.process||'—')+'</td><td><span class="badge-s badge-'+sc+'">'+s.status+'</span></td><td>'+(s.created_at||'').slice(0,10)+'</td></tr>';
+      }).join('')+'</table>';
     } else {
-      err.innerHTML = '<div class="err">'+d.error+'</div>';
+      document.getElementById('dashServices').innerHTML = '<p style="color:var(--text2)">No services yet. Request your first automation above!</p>';
     }
-  } catch(x) { err.innerHTML = '<div class="err">Connection error</div>'; }
-}
+    if (p.length) {
+      document.getElementById('dashPayments').innerHTML = '<h3>Payment History</h3><table><tr><th>Amount</th><th>Status</th><th>Date</th></tr>'+
+      p.map(function(pp){return '<tr><td>$'+(pp.amount/100).toFixed(2)+'</td><td><span class="badge-s badge-done">'+pp.status+'</span></td><td>'+(pp.created_at||'').slice(0,10)+'</td></tr>';}).join('')+'</table>';
+    }
+  },
 
-async function doLogout() {
-  await api('/api/logout');
-  currentUser = null;
-  document.getElementById('navAuth').style.display='flex';
-  document.getElementById('navUser').style.display='none';
-  showPage('landing');
-}
+  checkout: async function() {
+    var msg = document.getElementById('payMsg');
+    try {
+      var r = await M.api('/api/checkout', {method:'POST'});
+      if (r.url) {
+        window.location.href = r.url;
+      } else {
+        msg.textContent = r.error || 'Payment unavailable';
+        msg.style.display = 'block';
+      }
+    } catch(e) {
+      msg.textContent = 'Payment service unavailable';
+      msg.style.display = 'block';
+    }
+  },
 
-async function loadDashboard() {
-  const d = await api('/api/me');
-  if (!d.user) return showPage('landing');
-  document.getElementById('dashHi').textContent = 'Welcome, '+(d.user.name||'there');
-  document.getElementById('dashEmail').textContent = d.user.email;
-  const svcs = d.services||[];
-  document.getElementById('dashStats').innerHTML = `
-    <div class="stat-box"><div class="val">${svcs.length}</div><div class="lbl">Services</div></div>
-    <div class="stat-box"><div class="val">${svcs.filter(s=>s.status==='completed').length}</div><div class="lbl">Completed</div></div>
-    <div class="stat-box"><div class="val">${svcs.filter(s=>s.status==='in_progress').length}</div><div class="lbl">In Progress</div></div>
-    <div class="stat-box"><div class="val">${(d.payments||[]).length}</div><div class="lbl">Payments</div></div>`;
-  if (svcs.length) {
-    document.getElementById('dashServices').innerHTML = '<table><tr><th>Service</th><th>Process</th><th>Status</th><th>Date</th></tr>'+
-    svcs.map(s=>`<tr><td>${s.name}</td><td>${s.process||'—'}</td><td><span class="badge-s badge-${s.status==='completed'?'done':s.status==='in_progress'?'progress':'pending'}">${s.status}</span></td><td>${(s.created_at||'').slice(0,10)}</td></tr>`).join('')+'</table>';
-  } else {
-    document.getElementById('dashServices').innerHTML = '<p style="color:var(--text2)">No services yet. Request your first automation above!</p>';
+  reqService: async function() {
+    var p = document.getElementById('svcProcess').value;
+    var d = document.getElementById('svcDesc').value;
+    if (!p) return;
+    var body = 'process='+encodeURIComponent(p)+'&description='+encodeURIComponent(d);
+    await fetch(M.API+'/service/request', {method:'POST', credentials:'include', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:body});
+    var msg = document.getElementById('svcMsg');
+    msg.textContent = 'Service requested! We\'ll review within 24 hours.';
+    msg.style.display = 'block';
+    document.getElementById('svcProcess').value='';
+    document.getElementById('svcDesc').value='';
+    M.loadDash();
+  },
+
+  loadAdmin: async function() {
+    var d = await M.api('/api/me');
+    if (!d.user || d.user.role!=='admin') return M.show('landing');
+    var s = await M.api('/api/admin/stats');
+    document.getElementById('adminStats').innerHTML =
+      '<div class="stat-box"><div class="rev">$'+(s.totalRevenue/100).toFixed(0)+'</div><div class="lbl">Revenue</div></div>'+
+      '<div class="stat-box"><div class="val">'+s.totalUsers+'</div><div class="lbl">Customers</div></div>'+
+      '<div class="stat-box"><div class="val">'+s.activeServices+'</div><div class="lbl">Active</div></div>'+
+      '<div class="stat-box"><div class="val">'+s.completedServices+'</div><div class="lbl">Done</div></div>';
+    // Load admin tables from server
+    try {
+      var html = await (await fetch(M.API+'/admin', {credentials:'include'})).text();
+      var tables = html.match(/<table>[\s\S]*?<\/table>/g)||[];
+      if (tables[0]) document.getElementById('adminServices').innerHTML = tables[0];
+      if (tables[1]) document.getElementById('adminUsers').innerHTML = tables[1];
+    } catch(e) {}
   }
-}
+};
 
-async function reqService() {
-  const p = document.getElementById('svcProcess').value;
-  const d = document.getElementById('svcDesc').value;
-  if (!p) return;
-  const body = new URLSearchParams({process:p, description:d});
-  await fetch(API+'/service/request', {method:'POST', credentials:'include', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body});
-  document.getElementById('svcMsg').innerHTML = '<div class="success">Service requested! We'll review within 24 hours.</div>';
-  document.getElementById('svcProcess').value='';
-  document.getElementById('svcDesc').value='';
-  loadDashboard();
-}
+// Initialize — check if already logged in
+M.api('/api/me').then(function(d) {
+  if (d.user) M.setUser(d.user);
+}).catch(function(){});
 
-async function loadAdmin() {
-  const d = await api('/api/me');
-  if (!d.user || d.user.role!=='admin') return showPage('landing');
-  const s = await api('/api/admin/stats');
-  document.getElementById('adminStats').innerHTML = `
-    <div class="stat-box"><div class="rev">$${(s.totalRevenue/100).toFixed(0)}</div><div class="lbl">Revenue</div></div>
-    <div class="stat-box"><div class="val">${s.totalUsers}</div><div class="lbl">Customers</div></div>
-    <div class="stat-box"><div class="val">${s.activeServices}</div><div class="lbl">Active</div></div>
-    <div class="stat-box"><div class="val">${s.completedServices}</div><div class="lbl">Done</div></div>`;
-  // Full admin data from EJS endpoint
-  try {
-    const html = await (await fetch(API+'/admin', {credentials:'include'})).text();
-    // Parse tables from HTML
-    const sections = ['adminUsers','adminServices','adminPayments'];
-    const tables = html.match(/<table>[\s\S]*?<\/table>/g)||[];
-    sections.forEach((id,i)=>{
-      if (tables[i]) document.getElementById(id).innerHTML = tables[i];
-    });
-  } catch(e) {}
-}
-
-checkAuth();
+// Make Enter key submit forms
+document.addEventListener('keydown', function(e) {
+  if (e.key==='Enter') {
+    if (document.getElementById('pg-login').classList.contains('active')) M.login();
+    if (document.getElementById('pg-signup').classList.contains('active')) M.signup();
+  }
+});
 </script>
 </body>
 </html>
