@@ -479,9 +479,10 @@ try{var r=await M.api('/api/checkout',{method:'POST'});r.url?window.location.hre
 },
 reqService:async function(){
 var p=document.getElementById('svcProcess').value;if(!p)return;
-await fetch(M.API+'/service/request',{method:'POST',credentials:'include',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'process='+encodeURIComponent(p)+'&description='+encodeURIComponent(document.getElementById('svcDesc').value)});
-var m=document.getElementById('svcMsg');m.textContent='Request received! We review within 24 hours.';m.style.display='block';
-document.getElementById('svcProcess').value='';document.getElementById('svcDesc').value='';M.loadDash();
+var d=await M.api('/api/service/request',{method:'POST',body:JSON.stringify({process:p,description:document.getElementById('svcDesc').value})});
+var m=document.getElementById('svcMsg');
+m.textContent=d.message||d.error||'Request received!';m.style.display='block';
+if(d.ok){document.getElementById('svcProcess').value='';document.getElementById('svcDesc').value='';M.loadDash()}
 },
 loadAdmin:async function(){
 var d=await M.api('/api/me');if(!d.user||d.user.role!=='admin')return M.show('landing');
