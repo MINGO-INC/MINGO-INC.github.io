@@ -239,8 +239,31 @@ footer .ver{color:var(--accent);font-size:.7rem}
 <p class="sub">Real examples from our toolkit. Every sprint produces working code.</p>
 
 <div style="text-align:center;margin-bottom:36px">
-<img src="process-animation.svg" alt="How it works: Describe → Audit → Build → Live" style="max-width:100%;height:auto;border-radius:18px" loading="lazy">
+<div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;padding:40px 20px;background:var(--surface);border:1px solid var(--border);border-radius:18px">
+<div style="text-align:center;animation:slideUp .5s ease backwards">
+<div style="width:56px;height:56px;border-radius:50%;background:rgba(108,92,231,.12);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--accent2)">1</div>
+<div style="font-size:.9rem;color:var(--text);font-weight:600">Describe</div>
+<div style="font-size:.75rem;color:var(--text2)">the process</div>
 </div>
+<div style="color:var(--accent);font-size:1.2rem;animation:slideUp .5s ease .1s backwards">→</div>
+<div style="text-align:center;animation:slideUp .5s ease .15s backwards">
+<div style="width:56px;height:56px;border-radius:50%;background:rgba(108,92,231,.12);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--accent2)">2</div>
+<div style="font-size:.9rem;color:var(--text);font-weight:600">Audit</div>
+<div style="font-size:.75rem;color:var(--text2)">&amp; plan</div>
+</div>
+<div style="color:var(--accent);font-size:1.2rem;animation:slideUp .5s ease .2s backwards">→</div>
+<div style="text-align:center;animation:slideUp .5s ease .25s backwards">
+<div style="width:56px;height:56px;border-radius:50%;background:rgba(108,92,231,.12);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--accent2)">3</div>
+<div style="font-size:.9rem;color:var(--text);font-weight:600">Build</div>
+<div style="font-size:.75rem;color:var(--text2)">in 48 hours</div>
+</div>
+<div style="color:var(--accent);font-size:1.2rem;animation:slideUp .5s ease .3s backwards">→</div>
+<div style="text-align:center;animation:slideUp .5s ease .35s backwards">
+<div style="width:56px;height:56px;border-radius:50%;background:rgba(16,185,129,.12);border:2px solid var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--green)">4</div>
+<div style="font-size:.9rem;color:var(--text);font-weight:600">Live</div>
+<div style="font-size:.75rem;color:var(--text2)">with support</div>
+</div>
+</div></div>
 <div class="demo-grid">
 <div class="demo">Email Auto-Responder<br><span class="output">├── auto_reply.py<br>├── rules.yaml<br>└── README.md<br><br>$ python auto_reply.py<br>✅ Categorized 47 emails<br>📧 Auto-responded to 12 pricing queries<br>🚩 Flagged 3 urgent for review<br>⏱ Done in 0.8s</span></div>
 <div class="demo">Report Generator<br><span class="output">├── pipeline.py<br>├── templates/<br>└── scheduler.py<br><br>$ python pipeline.py<br>📊 Processing 1,247 records<br>📄 Generated weekly-report.pdf<br>📧 Emailed to team@client.com<br>⏱ Done in 2.1s</span></div>
