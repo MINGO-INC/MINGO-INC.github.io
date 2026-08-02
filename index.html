@@ -36,6 +36,9 @@ nav .c{display:flex;align-items:center;justify-content:space-between;height:62px
 .btn-o:hover{border-color:var(--accent);color:var(--accent);background:var(--gradient-subtle)}
 .btn-o:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .nav-r span{color:var(--text2);font-size:.85rem}
+.nav-links-desktop{display:flex;gap:24px;align-items:center}
+.nav-links-desktop span{color:var(--text2);cursor:pointer;font-size:.85rem;transition:color .2s}
+.nav-links-desktop span:hover{color:var(--text)}
 
 /* Pages */
 .page{display:none;animation:fadeIn .3s ease}
@@ -181,6 +184,7 @@ footer .ver{color:var(--accent);font-size:.7rem}
   .hero{padding:110px 0 60px}
   section{padding:60px 0}
   .nav-r{gap:6px}
+  .nav-links-desktop{display:none}
   .btn,.btn-o{padding:8px 14px;font-size:.82rem}
   .auth-box{margin:90px 16px;padding:28px 20px}
   .dash{padding:80px 0}
@@ -195,6 +199,11 @@ footer .ver{color:var(--accent);font-size:.7rem}
 
 <nav><div class="container c">
 <span class="logo" onclick="M.show('landing')">Mingo Services</span>
+<div class="nav-links-desktop">
+<span style="color:var(--text2);cursor:pointer;font-size:.85rem" onclick="document.getElementById('services-section').scrollIntoView({behavior:'smooth'})">Services</span>
+<span style="color:var(--text2);cursor:pointer;font-size:.85rem" onclick="document.getElementById('process-section').scrollIntoView({behavior:'smooth'})">How It Works</span>
+<span style="color:var(--text2);cursor:pointer;font-size:.85rem" onclick="document.getElementById('pricing-section').scrollIntoView({behavior:'smooth'})">Pricing</span>
+</div>
 <div class="nav-r" id="navAuth">
 <span class="btn-o" onclick="M.show('login')">Login</span>
 <span class="btn" onclick="M.show('signup')">Sign Up</span>
@@ -213,7 +222,7 @@ footer .ver{color:var(--accent);font-size:.7rem}
 <span class="orb orb-1"></span><span class="orb orb-2"></span><span class="orb orb-3"></span><span class="orb orb-4"></span><span class="orb orb-5"></span><span class="orb orb-6"></span><span class="orb orb-7"></span>
 <h1>Stop doing work<br><span>a machine should handle.</span></h1>
 <p>Email follow-ups. Data entry. Reports. The stuff that eats your week but doesn't need your brain. We automate it so you get back to the work that actually matters.</p>
-<span class="btn" onclick="M.show('signup')" style="font-size:1.1rem;padding:16px 40px;animation:glowPulse 3s ease-in-out infinite">Get a Free Audit →</span>
+<span class="btn" onclick="document.getElementById('pricing-section').scrollIntoView({behavior:'smooth'})" style="font-size:1.1rem;padding:16px 40px;animation:glowPulse 3s ease-in-out infinite">Get a Free Audit →</span>
 <div class="trust-row">
 <div class="trust-item"><div class="num">48h</div><div class="lbl">Delivery</div></div>
 <div class="trust-item"><div class="num">$497</div><div class="lbl">Flat Fee</div></div>
@@ -222,7 +231,7 @@ footer .ver{color:var(--accent);font-size:.7rem}
 </div>
 </div></section>
 
-<section><div class="container">
+<section id="process-section"><div class="container">
 <div class="section-tag">How It Works</div>
 <h2>Your automation, delivered</h2>
 <p class="sub">Four steps from manual to automated. No meetings. No enterprise sales process.</p>
@@ -233,7 +242,7 @@ footer .ver{color:var(--accent);font-size:.7rem}
 <div class="step"><div class="step-num">04</div><h3>You're Live</h3><p>Documentation, training, and 30 days of support. We don't disappear.</p></div>
 </div></div></section>
 
-<section><div class="container">
+<section id="services-section"><div class="container">
 <div class="section-tag">What We Build</div>
 <h2>Automations we ship</h2>
 <p class="sub">Real examples from our toolkit. Every sprint produces working code.</p>
@@ -269,7 +278,7 @@ footer .ver{color:var(--accent);font-size:.7rem}
 <div class="demo">Report Generator<br><span class="output">├── pipeline.py<br>├── templates/<br>└── scheduler.py<br><br>$ python pipeline.py<br>📊 Processing 1,247 records<br>📄 Generated weekly-report.pdf<br>📧 Emailed to team@client.com<br>⏱ Done in 2.1s</span></div>
 </div></div></section>
 
-<section><div class="container">
+<section id="pricing-section"><div class="container">
 <div class="section-tag">Pricing</div>
 <h2>One sprint. One price. Zero risk.</h2>
 <p class="sub">Start with a free audit. No credit card. No commitment. Just a clear plan for what we'd automate.</p>
