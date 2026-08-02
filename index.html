@@ -237,6 +237,10 @@ footer .ver{color:var(--accent);font-size:.7rem}
 <div class="section-tag">What We Build</div>
 <h2>Automations we ship</h2>
 <p class="sub">Real examples from our toolkit. Every sprint produces working code.</p>
+
+<div style="text-align:center;margin-bottom:36px">
+<img src="process-animation.svg" alt="How it works: Describe → Audit → Build → Live" style="max-width:100%;height:auto;border-radius:18px" loading="lazy">
+</div>
 <div class="demo-grid">
 <div class="demo">Email Auto-Responder<br><span class="output">├── auto_reply.py<br>├── rules.yaml<br>└── README.md<br><br>$ python auto_reply.py<br>✅ Categorized 47 emails<br>📧 Auto-responded to 12 pricing queries<br>🚩 Flagged 3 urgent for review<br>⏱ Done in 0.8s</span></div>
 <div class="demo">Report Generator<br><span class="output">├── pipeline.py<br>├── templates/<br>└── scheduler.py<br><br>$ python pipeline.py<br>📊 Processing 1,247 records<br>📄 Generated weekly-report.pdf<br>📧 Emailed to team@client.com<br>⏱ Done in 2.1s</span></div>
@@ -290,14 +294,26 @@ footer .ver{color:var(--accent);font-size:.7rem}
 
 <!-- SIGNUP -->
 <div id="pg-signup" class="page"><div class="auth-box">
-<h2>Create your account</h2>
-<p class="subtitle">Start automating in under 2 minutes</p>
+<h2 id="signupTitle">Create your account</h2>
+<p class="subtitle" id="signupSub">Start automating in under 2 minutes</p>
 <div class="err" id="signupErr"></div>
+<div class="success" id="signupSuccess"></div>
+<div id="signupForm">
 <label>Full Name</label><input type="text" id="signupName" placeholder="Your name" autocomplete="name">
 <label>Company (optional)</label><input type="text" id="signupCompany" placeholder="Your company">
-<label>Email</label><input type="email" id="signupEmail" placeholder="you@example.com" autocomplete="email">
+<label>Email</label><input type="email" id="signupEmail" placeholder="you@example.com" autocomplete="email" onblur="validateSignupEmail()">
+<div id="emailHint" style="font-size:.75rem;color:var(--red);display:none;margin:-8px 0 8px 0">Please enter a valid email address</div>
 <label>Password</label><input type="password" id="signupPass" placeholder="8+ chars, 1 uppercase, 1 number" autocomplete="new-password">
 <button class="btn" style="width:100%;justify-content:center" onclick="M.signup()">Create Account</button>
+</div>
+<div id="signupVerify" style="display:none">
+<p style="color:var(--text2);font-size:.9rem;margin-bottom:16px;text-align:center">We sent a 6-digit code to <strong id="verifyEmailDisplay"></strong>. Enter it below to verify your email.</p>
+<label>Verification Code</label>
+<input type="text" id="verifyCode" placeholder="000000" maxlength="6" inputmode="numeric" pattern="[0-9]*" style="text-align:center;font-size:1.4rem;letter-spacing:12px;font-family:'JetBrains Mono',monospace">
+<div class="err" id="verifyErr"></div>
+<button class="btn" style="width:100%;justify-content:center" onclick="M.verifyEmail()">Verify Email</button>
+<p style="text-align:center;font-size:.82rem;margin-top:12px;color:var(--text2)">Didn't get it? <span style="color:var(--accent2);cursor:pointer;text-decoration:underline" onclick="M.resendCode()">Resend code</span></p>
+</div>
 <div class="link"><span onclick="M.show('login')">Login</span> &middot; <span onclick="M.show('landing')">Home</span></div>
 </div></div>
 
@@ -378,11 +394,41 @@ d.ok?M.setUser(d.user):(e.textContent=d.error||'Login failed',e.style.display='b
 },
 signup:async function(){
 var e=document.getElementById('signupErr');e.style.display='none';
+var email=document.getElementById('signupEmail').value;
+if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){e.textContent='Please enter a valid email address';e.style.display='block';return}
 try{
-var d=await M.api('/api/signup',{method:'POST',body:JSON.stringify({name:document.getElementById('signupName').value,company:document.getElementById('signupCompany').value,email:document.getElementById('signupEmail').value,password:document.getElementById('signupPass').value})});
-d.ok?M.setUser(d.user):(e.textContent=d.error||'Signup failed',e.style.display='block');
-}catch(x){e.textContent='Server unavailable. Try again shortly.';e.style.display='block'}
+var d=await M.api('/api/signup',{method:'POST',body:JSON.stringify({name:document.getElementById('signupName').value,company:document.getElementById('signupCompany').value,email:email,password:document.getElementById('signupPass').value})});
+if(d.ok&&d.needsVerification){
+document.getElementById('signupForm').style.display='none';
+document.getElementById('signupVerify').style.display='block';
+document.getElementById('verifyEmailDisplay').textContent=email;
+document.getElementById('signupTitle').textContent='Verify your email';
+document.getElementById('signupSub').textContent='Check your inbox for the code';
+M._pendingEmail=email;
+}else if(d.ok){
+M.setUser(d.user);
+}else{
+e.textContent=d.error||'Signup failed';e.style.display='block';
+}
+}catch(x){e.textContent='Server unavailable';e.style.display='block'}
 },
+verifyEmail:async function(){
+var e=document.getElementById('verifyErr');e.style.display='none';
+var code=document.getElementById('verifyCode').value;
+if(!code||code.length!==6){e.textContent='Enter the 6-digit code';e.style.display='block';return}
+try{
+var d=await M.api('/api/verify-email',{method:'POST',body:JSON.stringify({email:M._pendingEmail,code:code})});
+if(d.ok){M.setUser(d.user)}else{e.textContent=d.error;e.style.display='block'}
+}catch(x){e.textContent='Verification failed. Try again.';e.style.display='block'}
+},
+resendCode:async function(){
+var e=document.getElementById('verifyErr');e.style.display='none';
+try{
+var d=await M.api('/api/signup',{method:'POST',body:JSON.stringify({name:'resend',company:'',email:M._pendingEmail,password:'Resend1'})});
+document.getElementById('verifyErr').textContent='New code sent!';e.style.color='var(--green)';e.style.display='block';
+}catch(x){}
+},
+_pendingEmail:null,
 setUser:function(u){
 M.user=u;
 document.getElementById('navAuth').style.display='none';
@@ -449,6 +495,14 @@ if(document.getElementById('pg-login').classList.contains('active'))M.login();
 if(document.getElementById('pg-signup').classList.contains('active'))M.signup();
 }
 });
+
+// Scroll-reveal cards
+var observer=new IntersectionObserver(function(entries){
+
+function validateSignupEmail(){
+var e=document.getElementById('signupEmail');var h=document.getElementById('emailHint');
+h.style.display=/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(e.value)?'none':'block';
+}
 
 // Scroll-reveal cards
 var observer=new IntersectionObserver(function(entries){
