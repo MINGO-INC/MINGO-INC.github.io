@@ -496,9 +496,6 @@ if(document.getElementById('pg-signup').classList.contains('active'))M.signup();
 }
 });
 
-// Scroll-reveal cards
-var observer=new IntersectionObserver(function(entries){
-
 function validateSignupEmail(){
 var e=document.getElementById('signupEmail');var h=document.getElementById('emailHint');
 h.style.display=/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(e.value)?'none':'block';
