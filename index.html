@@ -209,7 +209,8 @@ footer .ver{color:var(--accent);font-size:.7rem}
 <span class="btn" onclick="M.show('signup')">Sign Up</span>
 </div>
 <div class="nav-r" id="navUser" style="display:none">
-<span id="navName" style="color:var(--text)"></span>
+<span id="navName" style="color:var(--text);font-weight:600"></span>
+<span id="navAdminBtn" style="color:var(--accent2);cursor:pointer;font-size:.82rem;display:none" onclick="M.show(M.user&&M.user.role==='admin'?'dashboard':'admin');M.user&&M.user.role==='admin'?M.loadDash():M.loadAdmin()">Admin</span>
 <span style="color:var(--accent2);cursor:pointer" onclick="M.logout()">Logout</span>
 </div>
 </div></nav>
@@ -461,11 +462,8 @@ document.getElementById('verifyErr').textContent='New code sent!';e.style.color=
 },
 _pendingEmail:null,
 setUser:function(u){
-M.user=u;
-document.getElementById('navAuth').style.display='none';
-document.getElementById('navUser').style.display='flex';
-document.getElementById('navName').textContent=u.name||u.email;
-u.role==='admin'?M.show('admin'):M.show('dashboard');
+M.user=u;document.getElementById('navAuth').style.display='none';document.getElementById('navUser').style.display='flex';document.getElementById('navName').textContent=u.name||u.email;
+if(u.role==='admin'){document.getElementById('navAdminBtn').style.display='inline';M.show('admin')}else{M.show('dashboard')}
 },
 logout:async function(){await M.api('/api/logout');M.user=null;document.getElementById('navAuth').style.display='flex';document.getElementById('navUser').style.display='none';M.show('landing')},
 loadDash:async function(){
