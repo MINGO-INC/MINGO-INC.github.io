@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mingo Services — Demo</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#08080F;font-family:'Inter',-apple-system,sans-serif;color:#fff;overflow:hidden}
+.scene{width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;position:relative}
+.card{background:linear-gradient(135deg,#0F0F1A,#141428);border:1px solid rgba(108,92,231,.15);border-radius:24px;padding:60px 80px;text-align:center;max-width:700px;opacity:0;transform:translateY(30px);position:absolute;transition:opacity .5s,transform .5s}
+.card.active{opacity:1;transform:translateY(0)}
+.card h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;line-height:1.1;margin-bottom:12px}
+.card h1 span{background:linear-gradient(135deg,#6C5CE7,#A855F7,#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.card p{color:rgba(255,255,255,.5);font-size:1.1rem;max-width:400px;margin:0 auto;line-height:1.6}
+.dot{position:absolute;width:6px;height:6px;border-radius:50%;background:#6C5CE7;opacity:.5;animation:float 4s ease-in-out infinite}
+.dot:nth-child(2){top:20%;left:30%;animation-delay:.5s;background:#A855F7}
+.dot:nth-child(3){top:60%;right:25%;animation-delay:1s;background:#EC4899}
+.dot:nth-child(4){bottom:30%;left:20%;animation-delay:1.5s}
+.dot:nth-child(5){top:15%;right:20%;animation-delay:2s;background:#10B981}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+.progress{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
+.progress .p{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.15);transition:background .3s}
+.progress .p.on{background:#6C5CE7}
+.step{display:inline-flex;align-items:center;gap:8px;margin-top:24px;font-size:.85rem;color:rgba(255,255,255,.4)}
+.step .num{display:inline-flex;width:28px;height:28px;border-radius:50%;align-items:center;justify-content:center;background:rgba(108,92,231,.15);color:#A855F7;font-weight:700;font-size:.75rem}
+</style>
+</head>
+<body>
+<div class="scene">
+<div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+
+<div class="card active" id="c0">
+<h1>Stop doing work<br><span>a machine should handle.</span></h1>
+<p>Email follow-ups. Data entry. Reports. The stuff that eats your week.</p>
+<div class="step"><span class="num">1</span> Mingo Services</div>
+</div>
+
+<div class="card" id="c1">
+<h1>You tell us<br><span>what's broken.</span></h1>
+<p>One conversation. No decks. No meetings. Just tell us what drives you crazy.</p>
+<div class="step"><span class="num">2</span> Free audit</div>
+</div>
+
+<div class="card" id="c2">
+<h1>We build it<br><span>in 48 hours.</span></h1>
+<p>Custom automation. Working code. Your process, automated.</p>
+<div class="step"><span class="num">3</span> $497 flat — sprint</div>
+</div>
+
+<div class="card" id="c3">
+<h1>You get<br><span>your time back.</span></h1>
+<p>Documentation. Training. 30 days of support. We don't disappear.</p>
+<div class="step"><span class="num">4</span> You're live</div>
+</div>
+
+<div class="card" id="c4">
+<h1>One price.<br><span>No surprises.</span></h1>
+<p>Free audit → $497 sprint → $197/mo retainer. Money back if we don't deliver.</p>
+<div style="margin-top:28px"><span style="background:#6C5CE7;padding:12px 32px;border-radius:8px;font-weight:600;font-size:.9rem">Get a Free Audit →</span></div>
+<p style="font-size:.8rem;margin-top:16px;color:rgba(255,255,255,.3)">mingo-inc.github.io</p>
+</div>
+
+<div class="progress">
+<div class="p on" id="d0"></div><div class="p" id="d1"></div><div class="p" id="d2"></div><div class="p" id="d3"></div><div class="p" id="d4"></div>
+</div>
+</div>
+
+<script>
+var cards=document.querySelectorAll('.card');
+var dots=document.querySelectorAll('.p');
+var i=0;
+function next(){
+ cards.forEach(function(c){c.classList.remove('active')});
+ dots.forEach(function(d){d.classList.remove('on')});
+ cards[i].classList.add('active');
+ dots[i].classList.add('on');
+ i=(i+1)%5;
+}
+next();
+setInterval(next,3000);
+</script>
+</body>
+</html>
