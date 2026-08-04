@@ -515,6 +515,7 @@ document.getElementById('adminCustomers').innerHTML=cust.length?('<table><tr><th
 var pay=a.payments||[];
 document.getElementById('adminPayments').innerHTML=pay.length?('<table><tr><th>Customer</th><th>Amount</th><th>Session</th><th>Date</th></tr>'+pay.map(function(x){return'<tr><td>'+x.email+'</td><td>$'+(x.amount/100).toFixed(0)+'</td><td>'+x.stripe_session_id.slice(0,20)+'...</td><td>'+x.created_at.slice(0,10)+'</td></tr>'}).join('')+'</table>'):'<div class="empty"><p>No payments yet</p></div>';
 }
+};
 M.api('/api/me').then(function(d){if(d.user)M.setUser(d.user)}).catch(function(){});
 document.addEventListener('keydown',function(e){
 if(e.key==='Enter'){
