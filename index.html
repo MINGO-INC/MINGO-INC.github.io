@@ -388,18 +388,18 @@ footer .ver{color:var(--accent);font-size:.7rem}
 <div class="stats" id="adminStats"></div>
 
 <div class="section-box">
-<h3><span class="dot"></span> Recent Activity</h3>
-<div id="adminActivity" class="activity"><div class="empty"><p>Loading activity feed...</p></div></div>
-</div>
-
-<div class="section-box">
-<h3><span class="dot"></span> Active Services</h3>
+<h3><span class="dot"></span> Service Requests (Tickets)</h3>
 <div id="adminServices"></div>
 </div>
 
 <div class="section-box">
-<h3><span class="dot"></span> Recent Customers</h3>
-<div id="adminUsers"></div>
+<h3><span class="dot"></span> Customers</h3>
+<div id="adminCustomers"></div>
+</div>
+
+<div class="section-box">
+<h3><span class="dot"></span> Payments</h3>
+<div id="adminPayments"></div>
 </div>
 </div></div>
 
@@ -493,31 +493,28 @@ if(d.ok){document.getElementById('svcProcess').value='';document.getElementById(
 },
 loadAdmin:async function(){
 var d=await M.api('/api/me');if(!d.user||d.user.role!=='admin')return M.show('landing');
-var s=await M.api('/api/admin/stats');
+var a=await M.api('/api/admin/dashboard');
+var s=a.stats;
 document.getElementById('adminStats').innerHTML=
-'<div class="stat-box"><div class="icon-row"><span class="stat-icon">💰</span></div><div class="rev-num">$'+(s.totalRevenue/100).toFixed(0)+'</div><div class="lbl">Total Revenue</div></div>'+
-'<div class="stat-box"><div class="icon-row"><span class="stat-icon">👥</span></div><div class="val">'+s.totalUsers+'</div><div class="lbl">Customers</div></div>'+
-'<div class="stat-box"><div class="icon-row"><span class="stat-icon">🔄</span></div><div class="val">'+s.activeServices+'</div><div class="lbl">Active Services</div></div>'+
-'<div class="stat-box"><div class="icon-row"><span class="stat-icon">🏁</span></div><div class="val">'+s.completedServices+'</div><div class="lbl">Completed</div></div>';
-try{
-var h=await(await fetch(M.API+'/admin',{credentials:'include'})).text();
-var tables=h.match(/<table>[\s\S]*?<\/table>/g)||[];
-if(tables[0])document.getElementById('adminServices').innerHTML=tables[0];
-if(tables[1])document.getElementById('adminUsers').innerHTML=tables[1];
-// Activity from admin page
-var acts=h.match(/<tr>.*?login.*?<\/tr>|<tr>.*?signup.*?<\/tr>|<tr>.*?payment.*?<\/tr>|<tr>.*?service.*?<\/tr>/gi)||[];
-if(acts.length){
-document.getElementById('adminActivity').innerHTML=acts.slice(0,10).map(function(a){
-var isLogin=/login/i.test(a),isSignup=/signup/i.test(a),isPay=/payment/i.test(a);
-var cls=isLogin?'login':isSignup?'signup':isPay?'payment':'service';
-var t=a.match(/<td[^>]*>([^<]*)<\/td>/g)||[];
-var detail=t.length>1?t[1].replace(/<[^>]*>/g,'').slice(0,30):'';
-return'<div class="item"><span class="dot '+cls+'"></span>'+detail+'</div>';
-}).join('');
+'<div class="stat-box"><div class="rev-num">$'+(s.totalRevenue/100).toFixed(0)+'</div><div class="lbl">Revenue</div></div>'+
+'<div class="stat-box"><div class="val">'+s.totalUsers+'</div><div class="lbl">Customers</div></div>'+
+'<div class="stat-box"><div class="val">'+s.verifiedUsers+'</div><div class="lbl">Verified</div></div>'+
+'<div class="stat-box"><div class="val">'+s.pendingServices+'</div><div class="lbl">Pending</div></div>'+
+'<div class="stat-box"><div class="val">'+s.activeServices+'</div><div class="lbl">In Progress</div></div>'+
+'<div class="stat-box"><div class="val">'+s.completedServices+'</div><div class="lbl">Done</div></div>';
+
+// Services table
+var svc=a.services||[];
+document.getElementById('adminServices').innerHTML=svc.length?('<table><tr><th>Customer</th><th>Process</th><th>Status</th><th>Date</th></tr>'+svc.map(function(x){var c=x.status==='completed'?'done':x.status==='in_progress'?'progress':'pending';return'<tr><td>'+x.user_email+'<br><span style="font-size:.7rem;color:var(--text3)">'+x.user_name+'</span></td><td>'+x.process+'</td><td><span class="badge-s badge-'+c+'">'+x.status+'</span></td><td>'+x.created_at.slice(0,10)+'</td></tr>'}).join('')+'</table>'):'<div class="empty"><p>No service requests yet</p></div>';
+
+// Customers table
+var cust=a.customers||[];
+document.getElementById('adminCustomers').innerHTML=cust.length?('<table><tr><th>Email</th><th>Name</th><th>Company</th><th>Verified</th><th>Joined</th></tr>'+cust.map(function(x){return'<tr><td>'+x.email+'</td><td>'+x.name+'</td><td>'+(x.company||'—')+'</td><td>'+(x.email_verified?'<span style="color:var(--green)">✓</span>':'<span style="color:var(--amber)">⚠</span>')+'</td><td>'+x.created_at.slice(0,10)+'</td></tr>'}).join('')+'</table>'):'<div class="empty"><p>No customers yet</p></div>';
+
+// Payments table
+var pay=a.payments||[];
+document.getElementById('adminPayments').innerHTML=pay.length?('<table><tr><th>Customer</th><th>Amount</th><th>Session</th><th>Date</th></tr>'+pay.map(function(x){return'<tr><td>'+x.email+'</td><td>$'+(x.amount/100).toFixed(0)+'</td><td>'+x.stripe_session_id.slice(0,20)+'...</td><td>'+x.created_at.slice(0,10)+'</td></tr>'}).join('')+'</table>'):'<div class="empty"><p>No payments yet</p></div>';
 }
-}catch(e){}
-}
-};
 M.api('/api/me').then(function(d){if(d.user)M.setUser(d.user)}).catch(function(){});
 document.addEventListener('keydown',function(e){
 if(e.key==='Enter'){
